@@ -1,0 +1,2267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monthly Operating Reports — 120Water</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#f7f8fa;--white:#fff;--text:#1e2a3a;--text-sec:#5c6b7f;--text-hint:#8d99a8;
+--border:#e3e6eb;--border-lt:#eef0f4;--accent:#294088;--accent-hover:#1e3068;--accent-bg:#eceefb;
+--link:#2c5cc5;--green:#0d7a4f;--green-bg:#e8f5ec;--amber:#9e6b00;--amber-bg:#fef7e0;
+--red:#c62828;--red-bg:#fdecea;--radius:6px;--radius-lg:10px;
+--font:'Open Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+--font-heading:'Bebas Neue',sans-serif;
+--state-accent:#1a6b4a;--state-accent-hover:#145839;--state-accent-bg:#e8f5ec;
+}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.5;min-height:100vh}
+a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
+
+/* NAV — Sample Manager (dark blue) */
+.nav-sm{display:flex;align-items:center;background:#202936;height:56px;padding:0 32px;position:sticky;top:0;z-index:100;width:100%}
+/* NAV — State Dash (white) */
+.nav-sd{display:flex;align-items:center;background:#fff;height:56px;padding:0 32px;position:sticky;top:0;z-index:100;width:100%;border-bottom:1px solid var(--border)}
+.nav-sd .nav-link{color:var(--text-sec)}.nav-sd .nav-link:hover{color:var(--text)}.nav-sd .nav-link.active{color:var(--text);border-bottom-color:var(--accent)}
+.nav-sd .nav-icon{color:var(--text-hint)}.nav-sd .nav-icon:hover{color:var(--text)}
+.nav-sd .nav-badge{background:#e24b4a;color:#fff}
+.nav-sd .env-pill{background:var(--accent-bg);color:var(--accent)}
+.nav-logo{width:36px;height:36px;margin-right:28px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.nav-logo svg{width:32px;height:32px}
+.nav-links{display:flex;gap:0;flex:1}
+.nav-link{font-size:15px;color:rgba(255,255,255,0.7);padding:17px 18px;border-bottom:3px solid transparent;white-space:nowrap;font-weight:500;text-decoration:none;cursor:pointer}
+.nav-link:hover{color:#fff;text-decoration:none}
+.nav-link.active{color:#fff;border-bottom-color:#fff;text-decoration:none}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:16px}
+.nav-icon{cursor:pointer;color:rgba(255,255,255,0.6);display:flex;align-items:center}.nav-icon:hover{color:#fff}
+.nav-avatar{width:30px;height:30px;border-radius:50%;background:#5534A7;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff}
+.nav-badge{font-size:11px;font-weight:700;color:#fff;background:#e24b4a;border-radius:10px;padding:1px 7px;position:relative;top:-1px;margin-left:6px}
+.env-pill{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:rgba(255,255,255,0.15);color:rgba(255,255,255,0.7);margin-left:8px;letter-spacing:.5px}
+
+.page-shell{padding:32px 40px 60px;width:100%}
+.page-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:12px}
+.page-title{font-size:28px;font-weight:400;text-transform:uppercase;letter-spacing:1px;font-family:var(--font-heading)}
+.page-desc{font-size:14px;color:var(--text-sec);margin-bottom:28px}
+
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 22px;border-radius:var(--radius);font-size:14px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--text);transition:all .15s;text-decoration:none}
+.btn:hover{background:var(--bg);text-decoration:none}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}.btn-primary:hover{background:var(--accent-hover)}
+.btn-sm{padding:7px 16px;font-size:13px}
+.btn-ghost{border:none;background:none;color:var(--link);padding:7px 12px}.btn-ghost:hover{background:var(--accent-bg)}
+.btn-danger{color:var(--red);border-color:#e8b4b4}.btn-danger:hover{background:var(--red-bg)}
+.btn-success{background:var(--green);color:#fff;border-color:var(--green)}.btn-success:hover{background:#0a6440}
+.btn-state{background:var(--state-accent);color:#fff;border-color:var(--state-accent)}.btn-state:hover{background:var(--state-accent-hover)}
+
+.tbl-wrap{border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--white);overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+thead th{text-align:left;padding:14px 16px;font-weight:600;font-size:13px;color:var(--text-sec);border-bottom:1px solid var(--border);background:var(--white);white-space:nowrap}
+tbody td{padding:12px 16px;border-bottom:1px solid var(--border-lt);vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:#f8f9fc}
+.tbl-link{color:var(--link);font-weight:500;cursor:pointer}
+.tbl-action-btn{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:4px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--text-sec);transition:all .12s}
+.tbl-action-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+
+.td-status{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:600}
+.td-status.sent{background:var(--amber-bg);color:var(--amber)}
+.td-status.analyzed{background:var(--green-bg);color:var(--green)}
+.td-status.scheduled{background:var(--bg);color:var(--text-sec)}
+.td-status.pending{background:var(--amber-bg);color:var(--amber)}
+.td-status.approved{background:var(--green-bg);color:var(--green)}
+.td-status.rejected{background:var(--red-bg);color:var(--red)}
+.td-status.submitted{background:var(--accent-bg);color:var(--accent)}
+.td-status.draft{background:var(--bg);color:var(--text-sec)}
+
+/* STATS CARDS */
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.stat-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 24px}
+.stat-label{font-size:11px;color:var(--text-hint);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px;font-weight:600}
+.stat-val{font-size:28px;font-weight:700}
+.stat-change{font-size:12px;margin-top:4px}
+.stat-change.up{color:var(--green)}.stat-change.down{color:var(--red)}
+
+/* CHART PLACEHOLDER */
+.chart-row{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:28px}
+.chart-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px}
+.chart-title{font-size:14px;font-weight:600;margin-bottom:16px}
+.mini-bar-chart{display:flex;align-items:flex-end;gap:8px;height:120px;padding-top:12px}
+.mini-bar{flex:1;border-radius:4px 4px 0 0;transition:all .3s;cursor:pointer;position:relative;min-width:0}
+.mini-bar:hover{opacity:.85}
+.mini-bar-label{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--text-hint);white-space:nowrap}
+.mini-bar-val{position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:600;color:var(--text-sec);white-space:nowrap}
+.donut-wrap{display:flex;align-items:center;justify-content:center;gap:24px}
+.donut-legend{display:flex;flex-direction:column;gap:8px}
+.donut-legend-item{display:flex;align-items:center;gap:8px;font-size:12px}
+.donut-legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+/* TOOLBAR */
+.toolbar{display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.toolbar-right{margin-left:auto;display:flex;gap:12px;align-items:center}
+.search-box{display:flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--white);width:280px}
+.search-box input{border:none;outline:none;font-size:14px;flex:1;color:var(--text);background:transparent;font-family:var(--font)}
+
+/* IMPORT OVERLAY */
+.import-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:200;background:var(--bg)}
+.import-overlay.open{display:flex;flex-direction:column}
+.import-nav{display:flex;align-items:center;background:var(--white);height:52px;padding:0 32px;border-bottom:1px solid var(--border);flex-shrink:0}
+.import-nav-left{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--text-sec)}
+.import-nav-left a{color:var(--text-sec);text-decoration:none;font-weight:500;cursor:pointer}.import-nav-left a:hover{color:var(--text)}
+.import-nav-center{position:absolute;left:50%;transform:translateX(-50%);font-size:14px;color:var(--text-sec);white-space:nowrap}
+.import-body{display:flex;flex:1;overflow:hidden}
+.import-sidebar{width:240px;background:var(--white);border-right:1px solid var(--border);padding:28px 0;flex-shrink:0;overflow-y:auto}
+.sidebar-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text-hint);padding:0 24px;margin-bottom:16px}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:10px 24px;font-size:14px;color:var(--text-sec);cursor:pointer;border-left:3px solid transparent;transition:all .12s}
+.sidebar-item:hover{background:var(--bg)}
+.sidebar-item.active{color:var(--accent);font-weight:600;border-left-color:var(--accent);background:var(--accent-bg)}
+.sidebar-item.done{color:var(--green)}
+.sidebar-item .si-num{width:22px;height:22px;border-radius:50%;background:var(--border-lt);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.sidebar-item.active .si-num{background:var(--accent);color:#fff}
+.sidebar-item.done .si-num{background:var(--green-bg);color:var(--green)}
+.sidebar-sub{padding:4px 0 8px 60px;font-size:13px;color:var(--text-hint)}
+.sidebar-sub.active-sub{color:var(--accent);font-weight:600}
+.import-main{flex:1;overflow-y:auto;padding:40px 48px 120px;display:flex;justify-content:center;align-items:flex-start}
+.import-content{width:100%;max-width:640px}
+.import-content-wide{width:100%;max-width:100%}
+.import-title{font-size:28px;font-weight:400;margin-bottom:6px;font-family:var(--font-heading);letter-spacing:.5px}
+.import-desc{font-size:14px;color:var(--text-sec);margin-bottom:28px}
+.import-bottom{position:fixed;bottom:0;left:0;right:0;height:60px;background:var(--white);border-top:1px solid var(--border);display:flex;align-items:center;padding:0 32px;z-index:210}
+.import-bottom-left{flex:1}.import-bottom-right{display:flex;gap:10px}
+.inline-actions{display:flex;gap:10px;justify-content:center;margin-top:28px;padding-top:24px;border-top:1px solid var(--border);flex-wrap:wrap}
+
+.dropzone{border:2px dashed var(--border);border-radius:var(--radius-lg);padding:48px 24px;text-align:center;cursor:pointer;transition:all .2s;background:var(--white)}
+.dropzone:hover{border-color:var(--accent);background:var(--accent-bg)}
+.dz-icon{width:56px;height:56px;border-radius:50%;background:var(--accent-bg);display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.dz-title{font-size:16px;font-weight:600;margin-bottom:4px}
+.dz-sub{font-size:14px;color:var(--text-sec)}
+.dz-formats{margin-top:10px;font-size:12px;color:var(--text-hint)}
+
+.file-item{display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:8px}
+.file-badge{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;letter-spacing:.3px}
+.file-badge.pdf{background:#e24b4a}.file-badge.csv{background:#0d7a4f}
+.file-info{flex:1;min-width:0}
+.file-name{font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.file-meta{font-size:12px;color:var(--text-hint);margin-top:1px}
+.status-ready{font-size:12px;font-weight:600;padding:3px 10px;border-radius:12px;background:var(--green-bg);color:var(--green)}
+.file-remove{width:28px;height:28px;border:none;background:none;cursor:pointer;color:var(--text-hint);font-size:18px;border-radius:6px;display:flex;align-items:center;justify-content:center}.file-remove:hover{background:var(--red-bg);color:var(--red)}
+
+.alert{padding:12px 16px;border-radius:var(--radius);font-size:13px;display:flex;align-items:flex-start;gap:10px;margin-bottom:16px;line-height:1.5}
+.alert-info{background:var(--accent-bg);color:var(--accent);border:1px solid #c5cbe8}
+.alert-success{background:var(--green-bg);color:var(--green);border:1px solid #b3dfc5}
+
+.section-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px 28px;margin-bottom:16px}
+.section-title{font-size:16px;font-weight:700;margin-bottom:4px}
+.section-desc{font-size:13px;color:var(--text-sec);margin-bottom:18px}
+
+.progress-wrap{text-align:center;padding:40px 20px}
+.progress-ring-wrap{position:relative;width:100px;height:100px;margin:0 auto 20px}
+.progress-ring-wrap svg{transform:rotate(-90deg)}
+.progress-pct{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:22px;font-weight:700;color:var(--accent)}
+.progress-title{font-size:17px;font-weight:600;margin-bottom:4px}
+.progress-sub{font-size:14px;color:var(--text-sec);margin-bottom:24px}
+.agent-steps{text-align:left;max-width:420px;margin:0 auto}
+.agent-step{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:var(--radius);margin-bottom:6px;font-size:13px;background:var(--white);border:1px solid var(--border-lt)}
+.agent-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.agent-dot.done{background:var(--green)}.agent-dot.active{background:var(--accent);animation:pulse 1s infinite}.agent-dot.pending{background:var(--border)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.agent-check{color:var(--green);font-weight:700;font-size:14px}
+
+/* REVIEW TABLE */
+.review-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.summary-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px}
+.summary-label{font-size:11px;color:var(--text-hint);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px;font-weight:600}
+.summary-val{font-size:26px;font-weight:700}
+.conf-card{display:flex;align-items:center;gap:10px;padding:12px 16px;border:2px solid var(--green);border-radius:var(--radius);background:var(--green-bg);margin-bottom:20px}
+.conf-card .conf-icon{width:40px;height:40px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.conf-card .conf-label{font-size:16px;font-weight:700;color:var(--green)}
+.conf-card .conf-desc{font-size:12px;color:var(--text-sec)}
+.conf-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;white-space:nowrap}
+.conf-badge.high{background:var(--green-bg);color:var(--green)}
+.conf-badge.review{background:var(--amber-bg);color:var(--amber)}
+.conf-badge-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.conf-badge.high .conf-badge-dot{background:var(--green)}
+.conf-badge.review .conf-badge-dot{background:var(--amber)}
+
+.cell-input{padding:4px 6px;border:1px solid var(--border);border-radius:4px;font-size:12px;width:100%;max-width:60px;background:var(--white);color:var(--text);text-align:right;font-family:var(--font)}
+.cell-input:focus{border-color:var(--accent);outline:none}
+.cell-input.warn{border-color:var(--amber)}
+.review-btn{display:inline-flex;align-items:center;gap:3px;padding:3px 7px;border-radius:4px;font-size:10px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--text-sec);transition:all .12s;white-space:nowrap}
+.review-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:0}
+.tab{padding:10px 18px;font-size:13px;color:var(--text-sec);border-bottom:2px solid transparent;cursor:pointer;font-weight:500}.tab:hover{color:var(--text)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+
+.success-hero{text-align:center;padding:32px 20px 24px}
+.success-circle{width:72px;height:72px;border-radius:50%;background:var(--green-bg);display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.success-title{font-size:24px;font-weight:400;margin-bottom:6px;font-family:var(--font-heading);letter-spacing:.5px}
+.success-sub{font-size:14px;color:var(--text-sec);max-width:500px;margin:0 auto}
+.audit-title{font-size:14px;font-weight:600;margin:24px 0 10px;display:flex;align-items:center;gap:6px}
+.audit-list{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.audit-row{display:flex;align-items:flex-start;gap:12px;padding:10px 16px;font-size:13px;border-bottom:1px solid var(--border-lt);background:var(--white)}
+.audit-row:last-child{border-bottom:none}
+.audit-row:nth-child(even){background:var(--bg)}
+.audit-time{color:var(--text-hint);flex-shrink:0;width:80px;font-size:12px;font-weight:600;font-variant-numeric:tabular-nums}
+.audit-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;margin-top:5px}
+
+.footer{text-align:center;padding:40px 0 24px;color:var(--text-hint);font-size:12px}
+
+/* STATE DASH SPECIFIC */
+.mor-queue-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 24px;margin-bottom:12px;cursor:pointer;transition:all .15s}
+.mor-queue-card:hover{border-color:var(--accent);box-shadow:0 2px 12px rgba(0,0,0,0.06)}
+.mor-queue-card.selected{border-color:var(--accent);background:var(--accent-bg)}
+.mor-queue-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.mor-queue-title{font-size:15px;font-weight:600}
+.mor-queue-meta{font-size:12px;color:var(--text-sec);display:flex;gap:16px;flex-wrap:wrap}
+.mor-queue-meta span{display:flex;align-items:center;gap:4px}
+
+.review-drawer-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.35);z-index:300}
+.review-drawer-overlay.open{display:flex;justify-content:flex-end}
+.review-drawer{width:680px;max-width:95vw;background:var(--white);height:100%;overflow-y:auto;box-shadow:-4px 0 24px rgba(0,0,0,0.12)}
+.rd-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--white);z-index:1}
+.rd-title{font-size:18px;font-weight:400;font-family:var(--font-heading);letter-spacing:.5px}
+.rd-close{background:none;border:none;cursor:pointer;color:var(--text-hint);font-size:22px;padding:4px 8px;border-radius:4px}.rd-close:hover{background:var(--bg)}
+.rd-body{padding:24px}
+.rd-section{margin-bottom:24px}
+.rd-section-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--text-sec);margin-bottom:12px}
+.rd-field-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border-lt);font-size:13px}
+.rd-field-row:last-child{border-bottom:none}
+.rd-field-label{color:var(--text-sec);font-weight:600}
+.rd-field-value{font-weight:500}
+.rd-actions{display:flex;gap:12px;padding:20px 24px;border-top:1px solid var(--border);position:sticky;bottom:0;background:var(--white)}
+.rd-actions .btn{flex:1;justify-content:center}
+
+/* BULK ACTION BAR */
+.bulk-bar{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--white);border-top:2px solid var(--accent);padding:14px 40px;z-index:200;align-items:center;gap:16px;box-shadow:0 -4px 20px rgba(0,0,0,0.08)}
+.bulk-bar.visible{display:flex}
+.bulk-count{font-size:14px;font-weight:600;color:var(--accent)}
+
+.screen{display:none}.screen.visible{display:block;animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:900px){.stat-row,.review-summary{grid-template-columns:1fr 1fr}.chart-row{grid-template-columns:1fr}.import-sidebar{display:none}}
+
+/* Pagination */
+.pagination{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;font-size:13px;color:var(--text-sec)}
+
+/* FORM STYLES */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 20px}
+.form-group{display:flex;flex-direction:column;gap:4px}
+.form-group-full{display:flex;flex-direction:column;gap:4px;grid-column:1/-1}
+.form-label{font-size:12px;font-weight:600;color:var(--text-sec)}
+.form-sublabel{font-size:11px;color:var(--text-hint);font-weight:400}
+.form-input{padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:14px;background:var(--white);color:var(--text);font-family:var(--font)}
+.form-input:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px rgba(41,64,136,0.1)}
+.form-textarea{padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:14px;background:var(--white);color:var(--text);font-family:var(--font);resize:vertical;min-height:80px}
+.form-textarea:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px rgba(41,64,136,0.1)}
+.section-divider{border:none;border-top:1px solid var(--border);margin:24px 0}
+
+/* TEMPLATE BUILDER — field cards */
+.tmpl-field{display:flex;align-items:flex-start;gap:14px;padding:16px;border:1px solid var(--border);border-radius:var(--radius);background:var(--white);margin-bottom:10px;transition:all .15s;position:relative}
+.tmpl-field:hover{border-color:var(--accent);box-shadow:0 1px 6px rgba(41,64,136,0.06)}
+.tmpl-field-drag{width:20px;color:var(--text-hint);cursor:grab;display:flex;align-items:center;padding-top:2px;flex-shrink:0}
+.tmpl-field-body{flex:1;min-width:0}
+.tmpl-field-header{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.tmpl-field-name{font-size:14px;font-weight:600}
+.tmpl-field-type{font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;background:var(--accent-bg);color:var(--accent)}
+.tmpl-field-req{font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;background:var(--amber-bg);color:var(--amber)}
+.tmpl-field-meta{font-size:12px;color:var(--text-sec)}
+.tmpl-field-actions{display:flex;gap:4px;flex-shrink:0}
+.tmpl-field-btn{width:28px;height:28px;border:1px solid var(--border);border-radius:4px;background:var(--white);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-hint);transition:all .12s}
+.tmpl-field-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+.tmpl-field-btn.danger:hover{border-color:var(--red);color:var(--red);background:var(--red-bg)}
+
+/* TEMPLATE — section headers */
+.tmpl-section-header{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;font-size:13px;font-weight:700;color:var(--text-sec);text-transform:uppercase;letter-spacing:.3px}
+
+/* FIELD TYPE PICKER */
+.field-type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.field-type-option{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 12px;border:2px solid var(--border);border-radius:var(--radius-lg);cursor:pointer;transition:all .15s;background:var(--white);text-align:center}
+.field-type-option:hover{border-color:var(--accent);background:var(--accent-bg)}
+.field-type-option.selected{border-color:var(--accent);background:var(--accent-bg)}
+.field-type-icon{width:36px;height:36px;border-radius:8px;background:var(--bg);display:flex;align-items:center;justify-content:center}
+.field-type-option.selected .field-type-icon{background:var(--accent);color:#fff}
+.field-type-label{font-size:12px;font-weight:600}
+.field-type-desc{font-size:11px;color:var(--text-hint)}
+/* Settings dropdown */
+.settings-wrap{position:relative}
+.settings-btn{cursor:pointer;color:rgba(255,255,255,0.6);display:flex;align-items:center;padding:6px;border-radius:4px;border:none;background:none;transition:all .12s}
+.settings-btn:hover{color:#fff;background:rgba(255,255,255,0.1)}
+.nav-sd .settings-btn{color:var(--text-hint)}.nav-sd .settings-btn:hover{color:var(--text);background:var(--bg)}
+.settings-dd{display:none;position:absolute;top:100%;right:0;margin-top:6px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 8px 24px rgba(0,0,0,0.12);min-width:200px;z-index:300;overflow:hidden}
+.settings-dd.open{display:block}
+.settings-dd-item{display:flex;align-items:center;gap:10px;padding:10px 16px;font-size:13px;color:var(--text);cursor:pointer;border:none;background:none;width:100%;text-align:left;font-family:var(--font);transition:background .1s}
+.settings-dd-item:hover{background:var(--bg)}
+.settings-dd-item svg{flex-shrink:0;color:var(--text-sec)}
+.settings-dd-sep{height:1px;background:var(--border);margin:4px 0}
+
+/* Exceedance link in table */
+.exceedance-link{color:var(--amber);font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:4px;font-size:13px}
+.exceedance-link:hover{text-decoration:underline}
+.no-exceedance{color:var(--green);font-weight:500;font-size:13px;display:inline-flex;align-items:center;gap:4px}
+/* Toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1e2a3a;color:#fff;padding:14px 24px;border-radius:var(--radius-lg);font-size:14px;font-weight:500;display:flex;align-items:center;gap:10px;box-shadow:0 8px 32px rgba(0,0,0,0.2);z-index:400;transition:transform .3s ease,opacity .3s ease;opacity:0;pointer-events:none;max-width:500px}
+.toast.visible{transform:translateX(-50%) translateY(0);opacity:1;pointer-events:auto}
+.toast svg{flex-shrink:0}
+
+/* Template Builder Overlay */
+.tmpl-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:200;background:var(--bg)}
+.tmpl-overlay.open{display:flex;flex-direction:column}
+.tmpl-nav{display:flex;align-items:center;background:var(--white);height:52px;padding:0 32px;border-bottom:1px solid var(--border);flex-shrink:0}
+.tmpl-body{flex:1;overflow-y:auto;padding:40px 48px 120px;display:flex;justify-content:center}
+.tmpl-content{width:100%;max-width:680px}
+.tmpl-field-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:8px;display:flex;align-items:flex-start;gap:12px}
+.tmpl-field-card:hover{border-color:var(--accent);box-shadow:0 1px 4px rgba(0,0,0,0.04)}
+.tmpl-field-icon{width:32px;height:32px;border-radius:6px;background:var(--accent-bg);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tmpl-field-info{flex:1;min-width:0}
+.tmpl-field-name{font-size:14px;font-weight:600;margin-bottom:2px}
+.tmpl-field-meta{font-size:12px;color:var(--text-sec)}
+.tmpl-field-badges{display:flex;gap:6px;margin-top:4px;flex-wrap:wrap}
+.tmpl-field-badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px}
+.tmpl-field-badge.type{background:var(--accent-bg);color:var(--accent)}
+.tmpl-field-badge.req{background:var(--amber-bg);color:var(--amber)}
+.tmpl-field-badge.opt{background:var(--bg);color:var(--text-hint)}
+</style>
+</head>
+<body>
+
+<!-- ===== APP ROOT ===== -->
+<div id="app-root">
+
+<!-- =========================================== -->
+<!-- SAMPLE MANAGER EXPERIENCE                   -->
+<!-- =========================================== -->
+<div id="view-sample-manager">
+
+<nav class="nav-sm">
+ <div class="nav-logo"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" fill="rgba(255,255,255,0.15)"/><path d="M16 8c-1.5 3-5 6-5 10a5 5 0 0010 0c0-4-3.5-7-5-10z" fill="#fff"/></svg></div>
+ <div class="nav-links">
+  <a class="nav-link" onclick="event.preventDefault()">Dashboard</a>
+  <a class="nav-link" onclick="event.preventDefault()">Tasks</a>
+  <a class="nav-link" onclick="event.preventDefault()">Monitoring Requirements</a>
+  <a class="nav-link active" onclick="event.preventDefault()">Monthly Operating Reports</a>
+  <a class="nav-link" onclick="event.preventDefault()">Facilities</a>
+  <a class="nav-link" onclick="event.preventDefault()">Sampling Data</a>
+  <a class="nav-link" onclick="event.preventDefault()">Sampling Schedule</a>
+ </div>
+ <div class="nav-right">
+  <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" stroke-width="2"/><path d="M13.73 21a2 2 0 01-3.46 0" stroke="currentColor" stroke-width="2"/></svg></span>
+  <div class="settings-wrap">
+   <button class="settings-btn" onclick="toggleSettingsDD('sm-settings-dd')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12.22 2h-.44a2 2 0 00-2 2v.18a2 2 0 01-1 1.73l-.43.25a2 2 0 01-2 0l-.15-.08a2 2 0 00-2.73.73l-.22.38a2 2 0 00.73 2.73l.15.1a2 2 0 011 1.72v.51a2 2 0 01-1 1.74l-.15.09a2 2 0 00-.73 2.73l.22.38a2 2 0 002.73.73l.15-.08a2 2 0 012 0l.43.25a2 2 0 011 1.73V20a2 2 0 002 2h.44a2 2 0 002-2v-.18a2 2 0 011-1.73l.43-.25a2 2 0 012 0l.15.08a2 2 0 002.73-.73l.22-.39a2 2 0 00-.73-2.73l-.15-.08a2 2 0 01-1-1.74v-.5a2 2 0 011-1.74l.15-.09a2 2 0 00.73-2.73l-.22-.38a2 2 0 00-2.73-.73l-.15.08a2 2 0 01-2 0l-.43-.25a2 2 0 01-1-1.73V4a2 2 0 00-2-2z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg></button>
+   <div class="settings-dd" id="sm-settings-dd">
+    <button class="settings-dd-item" onclick="switchToStateDash();closeAllDD()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" stroke="currentColor" stroke-width="2"/><rect x="9" y="3" width="6" height="4" rx="1" stroke="currentColor" stroke-width="2"/></svg> Go to State Dash</button>
+    <div class="settings-dd-sep"></div>
+    <button class="settings-dd-item" onclick="closeAllDD()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 16v-4m0-4h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Help & Support</button>
+   </div>
+  </div>
+  <div class="nav-avatar">AD</div>
+ </div>
+</nav>
+
+<div class="page-shell">
+
+ <!-- MOR TAB CONTENT -->
+ <div id="sm-mor-content">
+
+ <div class="page-top">
+  <div>
+   <div class="page-title">Monthly Operating Reports</div>
+   <div class="page-desc" style="margin-bottom:0">Upload your lab results to populate and submit your monthly operating reports.</div>
+  </div>
+  <button class="btn btn-primary" onclick="openMORImport()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 16V4m0 0l-4 4m4-4l4 4" stroke="#fff" stroke-width="2" stroke-linecap="round"/><path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg> Upload Results</button>
+ </div>
+
+ <!-- Due this month banner (expandable) -->
+ <div id="due-banner" style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);margin-top:20px;margin-bottom:28px;overflow:hidden">
+  <div style="display:flex;align-items:center;gap:12px;padding:14px 20px;cursor:pointer" onclick="toggleDueBanner()">
+   <div style="width:40px;height:40px;border-radius:10px;background:var(--amber-bg);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="var(--amber)" stroke-width="2"/><path d="M16 2v4M8 2v4M3 10h18" stroke="var(--amber)" stroke-width="2" stroke-linecap="round"/></svg></div>
+   <div style="flex:1"><span style="font-size:14px;font-weight:700;color:var(--text)">3 reports due this month</span><span style="font-size:13px;color:var(--text-sec)"> · Due by Apr 30, 2026</span></div>
+   <svg id="due-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" style="transition:transform .2s;flex-shrink:0"><path d="M6 9l6 6 6-6" stroke="var(--text-hint)" stroke-width="2" stroke-linecap="round"/></svg>
+  </div>
+  <div id="due-details" style="display:none;border-top:1px solid var(--border)">
+   <div style="display:flex;align-items:center;gap:12px;padding:12px 20px 12px 72px;border-bottom:1px solid var(--border-lt)">
+    <div style="flex:1;font-size:13px"><span style="font-weight:600">Water Quality Monthly Report</span><span style="color:var(--text-sec)"> · WTP-01 Main Plant</span></div>
+    <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openMORImport()" style="padding:5px 14px;font-size:12px">Upload</button>
+   </div>
+   <div style="display:flex;align-items:center;gap:12px;padding:12px 20px 12px 72px;border-bottom:1px solid var(--border-lt)">
+    <div style="flex:1;font-size:13px"><span style="font-weight:600">Lead & Copper Compliance</span><span style="color:var(--text-sec)"> · Distribution System</span></div>
+    <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openMORImport()" style="padding:5px 14px;font-size:12px">Upload</button>
+   </div>
+   <div style="display:flex;align-items:center;gap:12px;padding:12px 20px 12px 72px">
+    <div style="flex:1;font-size:13px"><span style="font-weight:600">Disinfection Byproducts</span><span style="color:var(--text-sec)"> · WTP-01 Main Plant</span></div>
+    <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openMORImport()" style="padding:5px 14px;font-size:12px">Upload</button>
+   </div>
+  </div>
+ </div>
+
+ <!-- Report list -->
+ <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+  <div style="font-size:16px;font-weight:700">Your Reports</div>
+  <select style="padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;background:var(--white);font-family:var(--font)">
+   <option>All Months</option><option>April 2026</option><option>March 2026</option><option>February 2026</option>
+  </select>
+ </div>
+
+ <div class="tbl-wrap">
+  <table>
+   <thead><tr><th>Report Period</th><th>Report Name</th><th>Facility</th><th>Template</th><th>Threshold Exceedances</th><th>Status</th><th>Submitted</th><th>Actions</th></tr></thead>
+   <tbody id="mor-table-body"></tbody>
+  </table>
+  <div class="pagination"><div>Showing 1–7 of 7 reports</div></div>
+ </div>
+
+ </div><!-- end sm-mor-content -->
+</div>
+<div class="footer"><div style="margin-bottom:8px;opacity:.35"><svg width="100" height="24" viewBox="0 0 120 28" fill="none"><circle cx="14" cy="14" r="12" fill="#8d99a8"/><path d="M14 6c-1.5 3-4.5 5.5-4.5 9a4.5 4.5 0 009 0c0-3.5-3-6-4.5-9z" fill="#fff"/><text x="34" y="19" font-family="sans-serif" font-size="14" font-weight="700" fill="#8d99a8">120Water</text></svg></div><div>© 2026 120Water™ · Terms and Conditions · Privacy Policy</div></div>
+</div><!-- end view-sample-manager -->
+
+
+<!-- =========================================== -->
+<!-- STATE DASH EXPERIENCE                       -->
+<!-- =========================================== -->
+<div id="view-state-dash" style="display:none">
+
+<nav class="nav-sd">
+ <div class="nav-logo"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" fill="#eceefb"/><path d="M16 8c-1.5 3-5 6-5 10a5 5 0 0010 0c0-4-3.5-7-5-10z" fill="#294088"/></svg></div>
+ <div class="nav-links">
+  <a class="nav-link" onclick="event.preventDefault()">Dashboard</a>
+  <a class="nav-link" onclick="event.preventDefault()">Utilities</a>
+  <a class="nav-link" onclick="event.preventDefault()">Submissions</a>
+  <a class="nav-link active" onclick="event.preventDefault();showSDView('landing')">Monthly Operating Reports</a>
+ </div>
+ <div class="nav-right">
+  <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" stroke-width="2"/><path d="M13.73 21a2 2 0 01-3.46 0" stroke="currentColor" stroke-width="2"/></svg><span class="nav-badge">4</span></span>
+  <div class="settings-wrap">
+   <button class="settings-btn" onclick="toggleSettingsDD('sd-settings-dd')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12.22 2h-.44a2 2 0 00-2 2v.18a2 2 0 01-1 1.73l-.43.25a2 2 0 01-2 0l-.15-.08a2 2 0 00-2.73.73l-.22.38a2 2 0 00.73 2.73l.15.1a2 2 0 011 1.72v.51a2 2 0 01-1 1.74l-.15.09a2 2 0 00-.73 2.73l.22.38a2 2 0 002.73.73l.15-.08a2 2 0 012 0l.43.25a2 2 0 011 1.73V20a2 2 0 002 2h.44a2 2 0 002-2v-.18a2 2 0 011-1.73l.43-.25a2 2 0 012 0l.15.08a2 2 0 002.73-.73l.22-.39a2 2 0 00-.73-2.73l-.15-.08a2 2 0 01-1-1.74v-.5a2 2 0 011-1.74l.15-.09a2 2 0 00.73-2.73l-.22-.38a2 2 0 00-2.73-.73l-.15.08a2 2 0 01-2 0l-.43-.25a2 2 0 01-1-1.73V4a2 2 0 00-2-2z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg></button>
+   <div class="settings-dd" id="sd-settings-dd">
+    <button class="settings-dd-item" onclick="switchToSampleManager();closeAllDD()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M19 12H5m0 0l7 7m-7-7l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Go to Sample Manager</button>
+    <div class="settings-dd-sep"></div>
+    <button class="settings-dd-item" onclick="closeAllDD()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 16v-4m0-4h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Help & Support</button>
+   </div>
+  </div>
+  <div class="nav-avatar" style="background:var(--accent)">SU</div>
+ </div>
+</nav>
+
+<div class="page-shell" id="sd-main-content">
+
+ <!-- ===== LANDING PAGE ===== -->
+ <div id="sd-landing">
+  <div class="page-top">
+   <div>
+    <div class="page-title">Monthly Operating Reports — Dashboard</div>
+    <div class="page-desc" style="margin-bottom:0">Statewide MOR overview for <strong>March 2026</strong>. Review submission progress and compliance across all utilities.</div>
+   </div>
+   <div style="display:flex;gap:10px;align-items:center">
+    <select style="padding:8px 14px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;background:var(--white);font-family:var(--font);cursor:pointer" id="sd-month-select">
+     <option selected>March 2026</option><option>February 2026</option><option>January 2026</option><option>December 2025</option>
+    </select>
+   </div>
+  </div>
+
+  <!-- Top-level stats -->
+  <div class="stat-row" style="margin-top:24px;grid-template-columns:repeat(3,1fr)">
+   <div class="stat-card"><div class="stat-label">Total Utilities</div><div class="stat-val">127</div><div class="stat-change" style="color:var(--text-hint)">Statewide</div></div>
+   <div class="stat-card"><div class="stat-label">Reports Submitted</div><div class="stat-val">119<span style="font-size:14px;font-weight:400;color:var(--text-sec)"> / 127</span></div><div class="stat-change up">93.7% submission rate</div></div>
+   <div class="stat-card"><div class="stat-label">Exceedance Rate</div><div class="stat-val" style="color:var(--amber)">3.2<span style="font-size:14px;font-weight:400">%</span></div><div class="stat-change down">↑ 0.8% from Feb</div></div>
+  </div>
+
+  <!-- Review Submissions — alert banner style -->
+  <div id="sd-review-banner" style="display:flex;align-items:center;gap:14px;padding:14px 20px;background:var(--accent-bg);border:1px solid #c5cbe8;border-radius:var(--radius-lg);margin-bottom:20px;cursor:pointer;transition:all .12s" onclick="showSDView('review')" onmouseover="this.style.boxShadow='0 2px 8px rgba(41,64,136,0.08)'" onmouseout="this.style.boxShadow=''">
+   <div style="width:40px;height:40px;border-radius:10px;background:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="#fff" stroke-width="2"/><path d="M14 2v6h6M16 13H8m8 4H8m2-8H8" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></div>
+   <div style="flex:1"><span style="font-size:14px;font-weight:700;color:var(--accent)">4 submissions pending review</span><span style="font-size:13px;color:var(--text-sec)"> · From Carmel, Greenfield, Westfield, Noblesville</span></div>
+   <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();showSDView('review')">Review Now <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14m0 0l-6-6m6 6l-6 6" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </div>
+
+  <!-- Submission Status + Recent Activity + Report Templates — same row -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px">
+   <!-- Submission Status -->
+   <div class="chart-card">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+     <div class="chart-title" style="margin-bottom:0">Submission Status</div>
+     <div style="font-size:12px;color:var(--text-hint)">127 utilities</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+     <div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px"><span style="font-size:11px;font-weight:600;color:var(--green);display:flex;align-items:center;gap:5px"><span style="width:7px;height:7px;border-radius:2px;background:var(--green);display:inline-block"></span>Reviewed</span><span style="font-size:12px;font-weight:700;color:var(--text)">98</span></div>
+      <div style="height:6px;border-radius:3px;background:var(--border-lt);overflow:hidden"><div style="height:100%;width:77.2%;background:var(--green);border-radius:3px"></div></div>
+     </div>
+     <div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px"><span style="font-size:11px;font-weight:600;color:var(--accent);display:flex;align-items:center;gap:5px"><span style="width:7px;height:7px;border-radius:2px;background:var(--accent);display:inline-block"></span>Submitted</span><span style="font-size:12px;font-weight:700;color:var(--text)">17</span></div>
+      <div style="height:6px;border-radius:3px;background:var(--border-lt);overflow:hidden"><div style="height:100%;width:13.4%;background:var(--accent);border-radius:3px"></div></div>
+     </div>
+     <div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px"><span style="font-size:11px;font-weight:600;color:var(--amber);display:flex;align-items:center;gap:5px"><span style="width:7px;height:7px;border-radius:2px;background:var(--amber);display:inline-block"></span>Pending Review</span><span style="font-size:12px;font-weight:700;color:var(--text)">4</span></div>
+      <div style="height:6px;border-radius:3px;background:var(--border-lt);overflow:hidden"><div style="height:100%;width:3.1%;background:var(--amber);border-radius:3px"></div></div>
+     </div>
+     <div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px"><span style="font-size:11px;font-weight:600;color:var(--red);display:flex;align-items:center;gap:5px"><span style="width:7px;height:7px;border-radius:2px;background:var(--red);display:inline-block"></span>Not Submitted</span><span style="font-size:12px;font-weight:700;color:var(--text)">8</span></div>
+      <div style="height:6px;border-radius:3px;background:var(--border-lt);overflow:hidden"><div style="height:100%;width:6.3%;background:var(--red);border-radius:3px"></div></div>
+     </div>
+    </div>
+    <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border-lt)"><a style="font-size:12px;font-weight:600;color:var(--link);cursor:pointer;display:flex;align-items:center;gap:4px" onclick="showSDView('submissions')">View all submissions <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a></div>
+   </div>
+
+   <!-- Recent Activity -->
+   <div class="chart-card">
+    <div class="chart-title">Recent Activity</div>
+    <div style="display:flex;flex-direction:column;gap:0">
+     <div style="display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid var(--border-lt);font-size:11px"><span style="color:var(--text-hint);flex-shrink:0;width:58px;font-weight:600">2 hrs ago</span><span class="audit-dot" style="margin-top:3px;width:6px;height:6px"></span><span><strong>Carmel Water Dept</strong> submitted Water Quality Monthly</span></div>
+     <div style="display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid var(--border-lt);font-size:11px"><span style="color:var(--text-hint);flex-shrink:0;width:58px;font-weight:600">5 hrs ago</span><span class="audit-dot" style="margin-top:3px;width:6px;height:6px"></span><span><strong>Noblesville Municipal</strong> submitted Water Quality Monthly</span></div>
+     <div style="display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid var(--border-lt);font-size:11px"><span style="color:var(--text-hint);flex-shrink:0;width:58px;font-weight:600">1 day ago</span><span class="audit-dot" style="background:var(--green);margin-top:3px;width:6px;height:6px"></span><span>You reviewed <strong>Fishers Utility</strong> Water Quality Monthly</span></div>
+     <div style="display:flex;align-items:flex-start;gap:8px;padding:7px 0;font-size:11px"><span style="color:var(--text-hint);flex-shrink:0;width:58px;font-weight:600">1 day ago</span><span class="audit-dot" style="background:var(--red);margin-top:3px;width:6px;height:6px"></span><span>You rejected <strong>Westfield Water Works</strong> Lead & Copper</span></div>
+    </div>
+   </div>
+
+   <!-- Report Templates -->
+   <div class="chart-card" style="cursor:pointer;transition:all .15s;border:2px solid var(--border)" onclick="showSDView('templates')" onmouseover="this.style.borderColor='var(--accent)';this.style.boxShadow='0 2px 12px rgba(41,64,136,0.08)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+     <div style="width:36px;height:36px;border-radius:8px;background:var(--accent-bg);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="var(--accent)" stroke-width="2"/><path d="M3 9h18M9 21V9" stroke="var(--accent)" stroke-width="2"/></svg></div>
+     <div>
+      <div style="font-size:14px;font-weight:700">Report Templates</div>
+      <div style="font-size:12px;color:var(--text-sec)">4 active templates</div>
+     </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--text-sec)">
+     <div style="display:flex;align-items:center;gap:6px"><span style="width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0"></span>Water Quality Monthly</div>
+     <div style="display:flex;align-items:center;gap:6px"><span style="width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0"></span>Disinfection Byproduct</div>
+     <div style="display:flex;align-items:center;gap:6px"><span style="width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0"></span>Lead & Copper Compliance</div>
+     <div style="display:flex;align-items:center;gap:6px"><span style="width:5px;height:5px;border-radius:50%;background:var(--border);flex-shrink:0"></span>Nutrient Monitoring (Draft)</div>
+    </div>
+    <div style="font-size:12px;color:var(--link);font-weight:600;display:flex;align-items:center;gap:4px;margin-top:12px">Manage templates <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+   </div>
+  </div>
+
+  <!-- Utilities & Facilities -->
+  <div style="margin-bottom:28px">
+   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <div style="font-size:16px;font-weight:700">Utilities & Facilities <span style="font-size:13px;font-weight:400;color:var(--text-sec)">(March 2026)</span></div>
+    <div style="display:flex;gap:10px;align-items:center">
+     <select style="padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius);font-size:12px;background:var(--white);font-family:var(--font)" id="uf-filter" onchange="filterUFTable()">
+      <option value="">All Statuses</option><option value="Submitted">Submitted</option><option value="Not Submitted">Not Submitted</option><option value="N/A">N/A</option>
+     </select>
+     <button class="btn btn-sm" onclick="sendReminders()">Send Reminders</button>
+    </div>
+   </div>
+   <div class="tbl-wrap">
+    <table style="font-size:13px">
+     <thead><tr><th>Utility</th><th>Facility</th><th>Contact</th><th>Report Template</th><th>Status</th><th>Submitted</th><th>Actions</th></tr></thead>
+     <tbody id="uf-table-body"></tbody>
+    </table>
+    <div class="pagination" id="uf-pagination"></div>
+   </div>
+  </div>
+ </div>
+
+ <!-- ===== TEMPLATES SUB-VIEW ===== -->
+ <div id="sd-templates-content" style="display:none">
+  <div style="margin-bottom:20px"><a style="font-size:13px;color:var(--link);cursor:pointer;display:inline-flex;align-items:center;gap:4px" onclick="showSDView('landing')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M19 12H5m0 0l7 7m-7-7l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Back to Dashboard</a></div>
+  <div class="page-top">
+   <div>
+    <div class="page-title">Report Templates</div>
+    <div class="page-desc" style="margin-bottom:0">Create and manage the templates your utilities use to submit their monthly operating reports.</div>
+   </div>
+   <button class="btn btn-primary" onclick="showTemplateCreator()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14m-7-7h14" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg> New Template</button>
+  </div>
+  <div style="margin-top:24px">
+   <div class="tbl-wrap">
+    <table>
+     <thead><tr><th>Template Name</th><th>Fields</th><th>Utilities Using</th><th>Last Updated</th><th>Status</th><th>Actions</th></tr></thead>
+     <tbody>
+      <tr><td style="font-weight:600;color:var(--link);cursor:pointer" onclick="openTemplateViewer(0)">Water Quality Monthly Report</td><td>42 fields</td><td>127</td><td>Mar 15, 2026</td><td><span class="td-status approved">Active</span></td><td><button class="tbl-action-btn" onclick="editTemplate(0)">Edit</button></td></tr>
+      <tr><td style="font-weight:600;color:var(--link);cursor:pointer" onclick="openTemplateViewer(1)">Disinfection Byproduct Report</td><td>28 fields</td><td>89</td><td>Feb 20, 2026</td><td><span class="td-status approved">Active</span></td><td><button class="tbl-action-btn" onclick="editTemplate(1)">Edit</button></td></tr>
+      <tr><td style="font-weight:600;color:var(--link);cursor:pointer" onclick="openTemplateViewer(2)">Lead & Copper Compliance</td><td>35 fields</td><td>127</td><td>Jan 10, 2026</td><td><span class="td-status approved">Active</span></td><td><button class="tbl-action-btn" onclick="editTemplate(2)">Edit</button></td></tr>
+      <tr><td style="font-weight:600;color:var(--text-sec);cursor:pointer" onclick="openTemplateViewer(3)">Nutrient Monitoring (Draft)</td><td>18 fields</td><td>—</td><td>Apr 2, 2026</td><td><span class="td-status draft">Draft</span></td><td><button class="tbl-action-btn" onclick="editTemplate(3)">Edit</button></td></tr>
+     </tbody>
+    </table>
+   </div>
+  </div>
+ </div>
+
+ <!-- ===== REVIEW SUB-VIEW ===== -->
+ <div id="sd-review-content" style="display:none">
+  <div style="margin-bottom:20px"><a style="font-size:13px;color:var(--link);cursor:pointer;display:inline-flex;align-items:center;gap:4px" onclick="showSDView('landing')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M19 12H5m0 0l7 7m-7-7l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Back to Dashboard</a></div>
+  <div class="page-top">
+   <div>
+    <div class="page-title">Review MOR Submissions</div>
+    <div class="page-desc" style="margin-bottom:0">Review and process monthly operating report submissions from utilities across the state.</div>
+   </div>
+  </div>
+
+  <!-- MOR Queue -->
+  <div class="toolbar">
+   <div class="search-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#8d99a8" stroke-width="2"/><path d="M21 21l-4.35-4.35" stroke="#8d99a8" stroke-width="2" stroke-linecap="round"/></svg><input placeholder="Search utilities or report names..."></div>
+   <div class="toolbar-right">
+    <select style="padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;background:var(--white);font-family:var(--font)" id="sd-filter">
+     <option>Pending Review (4)</option><option>All Submissions</option><option>Reviewed</option><option>Rejected</option>
+    </select>
+    <button class="btn btn-sm" id="sd-select-all-btn" onclick="toggleSelectAllMOR()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Select All</button>
+   </div>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;margin-bottom:8px;font-size:13px;color:var(--text-sec)">
+   <input type="checkbox" id="sd-select-all-cb" onclick="toggleSelectAllMOR()" style="width:18px;height:18px;accent-color:var(--accent);cursor:pointer">
+   <label for="sd-select-all-cb" style="cursor:pointer;font-weight:600;user-select:none">Select all pending</label>
+  </div>
+
+  <div id="mor-queue-list"></div>
+ </div>
+
+ <!-- ===== ALL SUBMISSIONS SUB-VIEW ===== -->
+ <div id="sd-submissions-content" style="display:none">
+  <div style="margin-bottom:20px"><a style="font-size:13px;color:var(--link);cursor:pointer;display:inline-flex;align-items:center;gap:4px" onclick="showSDView('landing')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M19 12H5m0 0l7 7m-7-7l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Back to Dashboard</a></div>
+  <div class="page-top">
+   <div>
+    <div class="page-title">All Submissions</div>
+    <div class="page-desc" style="margin-bottom:0">Complete view of all monthly operating report submissions across utilities.</div>
+   </div>
+   <div style="display:flex;gap:10px;align-items:center">
+    <button class="btn btn-sm" id="submissions-export-btn" onclick="showToast('Export started — CSV will download shortly')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 4v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Export CSV</button>
+   </div>
+  </div>
+
+  <!-- Submission Status Breakdown -->
+  <div style="display:flex;gap:12px;margin-top:20px;margin-bottom:20px">
+   <div style="flex:1;display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius)">
+    <span style="width:8px;height:8px;border-radius:2px;background:var(--green);flex-shrink:0"></span>
+    <span style="font-size:13px;color:var(--text-sec)">Reviewed</span>
+    <span style="font-size:18px;font-weight:700;margin-left:auto">98</span>
+   </div>
+   <div style="flex:1;display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius)">
+    <span style="width:8px;height:8px;border-radius:2px;background:var(--accent);flex-shrink:0"></span>
+    <span style="font-size:13px;color:var(--text-sec)">Submitted</span>
+    <span style="font-size:18px;font-weight:700;margin-left:auto">17</span>
+   </div>
+   <div style="flex:1;display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius)">
+    <span style="width:8px;height:8px;border-radius:2px;background:var(--amber);flex-shrink:0"></span>
+    <span style="font-size:13px;color:var(--text-sec)">Pending Review</span>
+    <span style="font-size:18px;font-weight:700;margin-left:auto">4</span>
+   </div>
+   <div style="flex:1;display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius)">
+    <span style="width:8px;height:8px;border-radius:2px;background:var(--red);flex-shrink:0"></span>
+    <span style="font-size:13px;color:var(--text-sec)">Not Submitted</span>
+    <span style="font-size:18px;font-weight:700;margin-left:auto">8</span>
+   </div>
+  </div>
+
+  <!-- Filters -->
+  <div style="display:flex;align-items:center;gap:12px;margin-top:20px;margin-bottom:16px;flex-wrap:wrap">
+   <div class="search-box" style="width:240px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#8d99a8" stroke-width="2"/><path d="M21 21l-4.35-4.35" stroke="#8d99a8" stroke-width="2" stroke-linecap="round"/></svg><input placeholder="Search utilities..." id="sub-search" oninput="filterSubmissionsTable()"></div>
+   <select style="padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;background:var(--white);font-family:var(--font)" id="sub-filter-status" onchange="filterSubmissionsTable()">
+    <option value="">All Statuses</option><option value="Reviewed">Reviewed</option><option value="Submitted">Submitted</option><option value="Pending Review">Pending Review</option><option value="Rejected">Rejected</option>
+   </select>
+   <select style="padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;background:var(--white);font-family:var(--font)" id="sub-filter-period" onchange="filterSubmissionsTable()">
+    <option value="">All Periods</option><option value="March 2026">March 2026</option><option value="February 2026">February 2026</option><option value="January 2026">January 2026</option>
+   </select>
+   <select style="padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;background:var(--white);font-family:var(--font)" id="sub-filter-template" onchange="filterSubmissionsTable()">
+    <option value="">All Templates</option><option value="Water Quality Monthly">Water Quality Monthly</option><option value="Lead & Copper Compliance">Lead & Copper</option><option value="Disinfection Byproduct">Disinfection Byproduct</option>
+   </select>
+   <div style="margin-left:auto;font-size:13px;color:var(--text-sec)" id="sub-result-count">Showing 24 submissions</div>
+  </div>
+
+  <div class="tbl-wrap">
+   <table id="submissions-table">
+    <thead>
+     <tr>
+      <th style="cursor:pointer" onclick="sortSubmissions('utility')">Utility <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style="vertical-align:middle"><path d="M8 10l4-4 4 4M8 14l4 4 4-4" stroke="#8d99a8" stroke-width="2" stroke-linecap="round"/></svg></th>
+      <th style="cursor:pointer" onclick="sortSubmissions('report')">Report <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style="vertical-align:middle"><path d="M8 10l4-4 4 4M8 14l4 4 4-4" stroke="#8d99a8" stroke-width="2" stroke-linecap="round"/></svg></th>
+      <th style="cursor:pointer" onclick="sortSubmissions('period')">Period <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style="vertical-align:middle"><path d="M8 10l4-4 4 4M8 14l4 4 4-4" stroke="#8d99a8" stroke-width="2" stroke-linecap="round"/></svg></th>
+      <th style="cursor:pointer" onclick="sortSubmissions('submitted')">Submitted <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style="vertical-align:middle"><path d="M8 10l4-4 4 4M8 14l4 4 4-4" stroke="#8d99a8" stroke-width="2" stroke-linecap="round"/></svg></th>
+      <th>Results</th>
+      <th>Exceedances</th>
+      <th style="cursor:pointer" onclick="sortSubmissions('status')">Status <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style="vertical-align:middle"><path d="M8 10l4-4 4 4M8 14l4 4 4-4" stroke="#8d99a8" stroke-width="2" stroke-linecap="round"/></svg></th>
+      <th>Actions</th>
+     </tr>
+    </thead>
+    <tbody id="submissions-tbody"></tbody>
+   </table>
+   <div class="pagination" id="sub-pagination"></div>
+  </div>
+ </div>
+
+</div>
+<div class="footer"><div style="margin-bottom:8px;opacity:.35"><svg width="100" height="24" viewBox="0 0 120 28" fill="none"><circle cx="14" cy="14" r="12" fill="#8d99a8"/><path d="M14 6c-1.5 3-4.5 5.5-4.5 9a4.5 4.5 0 009 0c0-3.5-3-6-4.5-9z" fill="#fff"/><text x="34" y="19" font-family="sans-serif" font-size="14" font-weight="700" fill="#8d99a8">120Water</text></svg></div><div>© 2026 120Water™ · Terms and Conditions · Privacy Policy</div></div>
+</div><!-- end view-state-dash -->
+
+</div><!-- end app-root -->
+
+<!-- =========================================== -->
+<!-- TEMPLATE BUILDER OVERLAY                    -->
+<!-- =========================================== -->
+<div class="import-overlay" id="template-builder-overlay">
+ <div class="import-nav">
+  <div class="import-nav-left">
+   <a onclick="closeTemplateBuilder()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M19 12H5m0 0l7 7m-7-7l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a>
+   <a onclick="closeTemplateBuilder()">Back to Templates</a>
+  </div>
+  <div class="import-nav-center">New Report Template</div>
+ </div>
+ <div class="import-body">
+  <div class="import-sidebar" id="tmpl-sidebar"></div>
+  <div class="import-main" id="tmpl-main">
+
+   <!-- Step 1: Template Info -->
+   <div class="screen visible" id="tmpl-s-info">
+    <div class="import-content">
+     <div class="import-title">Template Details</div>
+     <div class="import-desc">Define the basic information for this report template. This determines what utilities will see when filling out their monthly operating reports.</div>
+
+     <div class="section-card">
+      <div class="section-title">General Information</div>
+      <div class="section-desc">Give your template a name and description so utilities know what data to provide.</div>
+      <div class="form-grid">
+       <div class="form-group-full">
+        <label class="form-label">Template Name <span style="color:var(--red)">*</span></label>
+        <input class="form-input" id="tmpl-name" placeholder="e.g. Water Quality Monthly Report" value="">
+       </div>
+       <div class="form-group-full">
+        <label class="form-label">Description</label>
+        <textarea class="form-textarea" id="tmpl-desc" placeholder="Describe the purpose of this template and what data utilities should report..."></textarea>
+       </div>
+       <div class="form-group">
+        <label class="form-label">Report Frequency <span style="color:var(--red)">*</span></label>
+        <select class="form-input" id="tmpl-freq">
+         <option value="monthly" selected>Monthly</option>
+         <option value="quarterly">Quarterly</option>
+         <option value="annually">Annually</option>
+        </select>
+       </div>
+       <div class="form-group">
+        <label class="form-label">Submission Deadline <span style="color:var(--red)">*</span></label>
+        <select class="form-input" id="tmpl-deadline">
+         <option value="15">15th of following month</option>
+         <option value="30">End of following month</option>
+         <option value="10">10th of following month</option>
+        </select>
+       </div>
+       <div class="form-group">
+        <label class="form-label">Regulatory Program</label>
+        <select class="form-input" id="tmpl-program">
+         <option value="">Select program...</option>
+         <option value="sdwa">Safe Drinking Water Act</option>
+         <option value="lcr">Lead and Copper Rule</option>
+         <option value="dbp">Disinfection Byproducts</option>
+         <option value="custom">Custom</option>
+        </select>
+       </div>
+       <div class="form-group">
+        <label class="form-label">Assign To</label>
+        <select class="form-input" id="tmpl-assign">
+         <option value="all">All Utilities (127)</option>
+         <option value="community">Community Water Systems (89)</option>
+         <option value="nontransient">Non-transient NTNC (38)</option>
+         <option value="custom">Select Individually...</option>
+        </select>
+       </div>
+      </div>
+     </div>
+
+     <div class="inline-actions">
+      <button class="btn" onclick="closeTemplateBuilder()">Cancel</button>
+      <button class="btn btn-primary" onclick="tmplNavigate(1)">Continue to Fields ›</button>
+     </div>
+    </div>
+   </div>
+
+   <!-- Step 2: Add Fields -->
+   <div class="screen" id="tmpl-s-fields">
+    <div class="import-content" style="max-width:780px">
+     <div class="import-title">Add Report Fields</div>
+     <div class="import-desc">Build out the fields that utilities will fill in each reporting period. Drag to reorder. Group related fields into sections.</div>
+
+     <div style="display:flex;gap:10px;margin-bottom:20px">
+      <button class="btn btn-primary" onclick="openAddFieldModal()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14m-7-7h14" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg> Add Field</button>
+      <button class="btn" onclick="addTemplateSection()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Add Section</button>
+     </div>
+
+     <div id="tmpl-fields-list"></div>
+
+     <div class="inline-actions">
+      <button class="btn" onclick="tmplNavigate(0)">← Back</button>
+      <button class="btn btn-primary" onclick="tmplNavigate(2)">Preview Template ›</button>
+     </div>
+    </div>
+   </div>
+
+   <!-- Step 3: Preview -->
+   <div class="screen" id="tmpl-s-preview">
+    <div class="import-content" style="max-width:780px">
+     <div class="import-title">Preview Template</div>
+     <div class="import-desc">This is how the report template will appear to utilities when they fill out their monthly operating reports.</div>
+
+     <div class="section-card" id="tmpl-preview-card"></div>
+
+     <div class="inline-actions">
+      <button class="btn" onclick="tmplNavigate(1)">← Edit Fields</button>
+      <button class="btn btn-primary" onclick="tmplNavigate(3)">Publish Template ›</button>
+     </div>
+    </div>
+   </div>
+
+   <!-- Step 4: Success -->
+   <div class="screen" id="tmpl-s-success">
+    <div class="import-content">
+     <div class="success-hero">
+      <div class="success-circle"><svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="success-title">Template Published</div>
+      <div class="success-sub" id="tmpl-success-sub">Your report template has been published and is now available to all assigned utilities.</div>
+     </div>
+     <div class="review-summary">
+      <div class="summary-card"><div class="summary-label">Template Name</div><div class="summary-val" style="font-size:14px" id="tmpl-success-name">—</div></div>
+      <div class="summary-card"><div class="summary-label">Fields</div><div class="summary-val" id="tmpl-success-fields">0</div></div>
+      <div class="summary-card"><div class="summary-label">Assigned To</div><div class="summary-val" style="font-size:14px" id="tmpl-success-assign">—</div></div>
+      <div class="summary-card"><div class="summary-label">Status</div><div class="summary-val" style="font-size:16px;color:var(--green)">Active</div></div>
+     </div>
+     <div class="inline-actions">
+      <button class="btn" onclick="closeTemplateBuilder()">← Back to Templates</button>
+      <button class="btn btn-primary" onclick="closeTemplateBuilder();showSDView('landing')">Go to Dashboard ›</button>
+     </div>
+    </div>
+   </div>
+
+  </div>
+ </div>
+ <div class="import-bottom">
+  <div class="import-bottom-left"><button class="btn btn-sm" id="tmpl-bb-back" onclick="tmplPrevStep()">‹ Back</button></div>
+  <div class="import-bottom-right"><button class="btn btn-sm" onclick="closeTemplateBuilder()">Cancel</button><button class="btn btn-primary btn-sm" id="tmpl-bb-next" onclick="tmplNextStep()">Continue ›</button></div>
+ </div>
+</div>
+
+<!-- =========================================== -->
+<!-- ADD FIELD MODAL                             -->
+<!-- =========================================== -->
+<div class="review-drawer-overlay" id="add-field-modal" style="justify-content:center;align-items:center">
+ <div style="background:var(--white);border-radius:var(--radius-lg);width:560px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.2)">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border)">
+   <div style="font-size:18px;font-weight:400;font-family:var(--font-heading);letter-spacing:.5px">Add Field</div>
+   <button class="rd-close" onclick="closeAddFieldModal()">×</button>
+  </div>
+  <div style="padding:24px">
+   <div class="form-group" style="margin-bottom:16px">
+    <label class="form-label">Field Name <span style="color:var(--red)">*</span></label>
+    <input class="form-input" id="af-name" placeholder="e.g. Lead, pH, Turbidity">
+   </div>
+
+   <div class="form-group" style="margin-bottom:16px">
+    <label class="form-label">Field Type <span style="color:var(--red)">*</span></label>
+    <div class="field-type-grid" id="af-type-grid">
+     <div class="field-type-option selected" onclick="selectFieldType(this,'number')">
+      <div class="field-type-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4z" stroke="currentColor" stroke-width="1.5"/><path d="M17 14v6m-3-3h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="field-type-label">Numeric</div>
+      <div class="field-type-desc">Numbers, decimals</div>
+     </div>
+     <div class="field-type-option" onclick="selectFieldType(this,'text')">
+      <div class="field-type-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 7V4h16v3M9 20h6M12 4v16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="field-type-label">Text</div>
+      <div class="field-type-desc">Free text entry</div>
+     </div>
+     <div class="field-type-option" onclick="selectFieldType(this,'select')">
+      <div class="field-type-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="field-type-label">Dropdown</div>
+      <div class="field-type-desc">Predefined choices</div>
+     </div>
+     <div class="field-type-option" onclick="selectFieldType(this,'date')">
+      <div class="field-type-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M16 2v4M8 2v4M3 10h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="field-type-label">Date</div>
+      <div class="field-type-desc">Date picker</div>
+     </div>
+     <div class="field-type-option" onclick="selectFieldType(this,'yesno')">
+      <div class="field-type-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="field-type-label">Yes / No</div>
+      <div class="field-type-desc">Boolean toggle</div>
+     </div>
+     <div class="field-type-option" onclick="selectFieldType(this,'pa')">
+      <div class="field-type-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M8 12h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="field-type-label">Present/Absent</div>
+      <div class="field-type-desc">Detection status</div>
+     </div>
+    </div>
+   </div>
+
+   <div class="form-grid" style="margin-bottom:16px">
+    <div class="form-group">
+     <label class="form-label">Unit of Measure</label>
+     <select class="form-input" id="af-unit">
+      <option value="">None</option>
+      <option value="mg/L" selected>mg/L</option>
+      <option value="ug/L">ug/L</option>
+      <option value="pCi/L">pCi/L</option>
+      <option value="NTU">NTU</option>
+      <option value="SU">SU (pH)</option>
+      <option value="P/A">Present/Absent</option>
+      <option value="CFU">CFU/100mL</option>
+      <option value="custom">Custom...</option>
+     </select>
+    </div>
+    <div class="form-group">
+     <label class="form-label">MCL / Limit</label>
+     <input class="form-input" id="af-mcl" placeholder="e.g. 0.015">
+    </div>
+   </div>
+
+   <div class="form-grid" style="margin-bottom:16px">
+    <div class="form-group">
+     <label class="form-label">EPA Method</label>
+     <input class="form-input" id="af-method" placeholder="e.g. EPA 200.8">
+    </div>
+    <div class="form-group">
+     <label class="form-label">Options</label>
+     <div style="display:flex;flex-direction:column;gap:8px;padding-top:4px">
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer"><input type="checkbox" id="af-required" checked style="accent-color:var(--accent)"> Required field</label>
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer"><input type="checkbox" id="af-validate" style="accent-color:var(--accent)"> Validate against MCL</label>
+     </div>
+    </div>
+   </div>
+
+   <div class="form-group" style="margin-bottom:20px">
+    <label class="form-label">Help Text <span class="form-sublabel">(shown to utilities)</span></label>
+    <input class="form-input" id="af-help" placeholder="e.g. Enter the 90th percentile value from lab results">
+   </div>
+
+   <div style="display:flex;gap:10px;justify-content:flex-end;padding-top:16px;border-top:1px solid var(--border)">
+    <button class="btn" onclick="closeAddFieldModal()">Cancel</button>
+    <button class="btn btn-primary" onclick="confirmAddField()">Add Field</button>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- =========================================== -->
+<!-- REPORT VIEWER OVERLAY                       -->
+<!-- =========================================== -->
+<div class="review-drawer-overlay" id="report-viewer-overlay">
+ <div class="review-drawer" style="width:740px">
+  <div class="rd-header">
+   <div class="rd-title" id="rv-title">Report Viewer</div>
+   <button class="rd-close" onclick="closeReportViewer()">×</button>
+  </div>
+  <div class="rd-body" id="rv-body"></div>
+  <div class="rd-actions" style="justify-content:flex-end">
+   <button class="btn" onclick="closeReportViewer()">Close</button>
+  </div>
+ </div>
+</div>
+
+
+<!-- =========================================== -->
+<!-- MOR IMPORT OVERLAY (Sample Manager)         -->
+<!-- =========================================== -->
+<div class="import-overlay" id="mor-import-overlay">
+ <div class="import-nav">
+  <div class="import-nav-left">
+   <a onclick="closeMORImport()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M19 12H5m0 0l7 7m-7-7l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a>
+   <a onclick="closeMORImport()">Back to Reports</a>
+  </div>
+  <div class="import-nav-center">Upload MOR Results</div>
+ </div>
+ <div class="import-body">
+  <div class="import-sidebar" id="mor-import-sidebar"></div>
+  <div class="import-main" id="mor-import-main">
+
+   <!-- Step 1: Upload -->
+   <div class="screen visible" id="mor-s-upload">
+    <div class="import-content">
+     <div class="import-title">Upload Results</div>
+     <div class="import-desc">Upload your lab results PDF. The system will extract values and auto-populate your monthly operating report.</div>
+     <div class="dropzone" id="mor-dropzone" onclick="morSimulateUpload()">
+      <div class="dz-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 16V4m0 0l-4 4m4-4l4 4" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/><path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/></svg></div>
+      <div class="dz-title">Drag and drop your results PDF</div>
+      <div class="dz-sub">or <a href="#" onclick="event.preventDefault();morSimulateUpload()">browse your computer</a></div>
+      <div class="dz-formats">PDF · Max 25 MB per file</div>
+     </div>
+     <div id="mor-file-list" style="display:none;margin-top:20px"></div>
+     <div class="inline-actions" id="mor-upload-actions" style="display:none">
+      <button class="btn" onclick="closeMORImport()">Cancel</button>
+      <button class="btn btn-primary" onclick="morNextStep()">Continue ›</button>
+     </div>
+    </div>
+   </div>
+
+   <!-- Step 2: Processing -->
+   <div class="screen" id="mor-s-processing">
+    <div class="import-content">
+     <div class="import-title">Processing Results</div>
+     <div class="import-desc">The system is extracting data from your uploaded file.</div>
+     <div class="section-card"><div class="progress-wrap">
+      <div class="progress-ring-wrap"><svg width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" fill="none" stroke="var(--border)" stroke-width="7"/><circle id="mor-prog-circle" cx="50" cy="50" r="42" fill="none" stroke="var(--accent)" stroke-width="7" stroke-dasharray="263.9" stroke-dashoffset="263.9" stroke-linecap="round" style="transition:stroke-dashoffset .8s ease"/></svg><div class="progress-pct" id="mor-prog-pct">0%</div></div>
+      <div class="progress-title" id="mor-prog-title">Initializing...</div>
+      <div class="progress-sub" id="mor-prog-sub">Processing 1 file</div>
+      <div class="agent-steps">
+       <div class="agent-step" id="mor-as0"><span class="agent-dot pending"></span><span>Detecting file type</span><span class="agent-check" style="display:none">✓</span></div>
+       <div class="agent-step" id="mor-as1"><span class="agent-dot pending"></span><span>Identifying report fields</span><span class="agent-check" style="display:none">✓</span></div>
+       <div class="agent-step" id="mor-as2"><span class="agent-dot pending"></span><span>Extracting results data</span><span class="agent-check" style="display:none">✓</span></div>
+       <div class="agent-step" id="mor-as3"><span class="agent-dot pending"></span><span>Mapping to report template</span><span class="agent-check" style="display:none">✓</span></div>
+      </div>
+     </div></div>
+    </div>
+   </div>
+
+   <!-- Step 3: Review -->
+   <div class="screen" id="mor-s-review">
+    <div class="import-content-wide">
+     <div class="import-title">Review & Edit Results</div>
+     <div class="import-desc">Review extracted results and verify values before submitting your monthly operating report.</div>
+
+     <div class="conf-card"><div class="conf-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg></div><div><div class="conf-label">High confidence extraction</div><div class="conf-desc">The system extracted most values with high certainty. 2 items need manual review, and 2 results exceed MCL limits.</div></div></div>
+
+     <div class="review-summary">
+      <div class="summary-card"><div class="summary-label">Fields Populated</div><div class="summary-val">18</div></div>
+      <div class="summary-card"><div class="summary-label">Needs Review</div><div class="summary-val" style="color:var(--amber)">2</div></div>
+      <div class="summary-card"><div class="summary-label">MCL Exceedances</div><div class="summary-val" style="color:var(--amber)">2</div></div>
+      <div class="summary-card"><div class="summary-label">Source File</div><div class="summary-val" style="font-size:14px">March_Lab_Results.pdf</div></div>
+     </div>
+
+     <div class="tbl-wrap">
+      <table>
+       <thead><tr><th>Field</th><th>Extracted Value</th><th>Unit</th><th>MCL</th><th>Method</th><th>Confidence</th><th>Status</th></tr></thead>
+       <tbody id="mor-review-tbody"></tbody>
+      </table>
+     </div>
+
+     <div class="inline-actions">
+      <button class="btn" onclick="morNavigate(0)">← Upload different file</button>
+      <button class="btn btn-primary" onclick="morNavigate(3)">Confirm Results ›</button>
+     </div>
+    </div>
+   </div>
+
+   <!-- Step 4: Submit to State -->
+   <div class="screen" id="mor-s-submit">
+    <div class="import-content">
+     <div class="import-title">Submit to State</div>
+     <div class="import-desc">Review your completed report before submitting to the state for review.</div>
+
+     <div class="section-card">
+      <div class="section-title">Report Summary</div>
+      <div class="section-desc">Water Quality Monthly Report — March 2026</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px 24px;font-size:13px">
+       <div><span style="color:var(--text-sec);font-weight:600">Utility:</span> Carmel Water Department</div>
+       <div><span style="color:var(--text-sec);font-weight:600">Period:</span> March 2026</div>
+       <div><span style="color:var(--text-sec);font-weight:600">Template:</span> Water Quality Monthly Report</div>
+       <div><span style="color:var(--text-sec);font-weight:600">Fields Completed:</span> 18 of 18</div>
+       <div><span style="color:var(--text-sec);font-weight:600">Results Imported:</span> 18</div>
+       <div><span style="color:var(--text-sec);font-weight:600">Report Status:</span> <span class="td-status analyzed">Complete</span></div>
+      </div>
+     </div>
+
+     <div class="alert alert-info" style="margin-top:16px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 16v-4m0-4h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><div>Once submitted, this report will be sent to the state for review. You will be notified when it's reviewed or if changes are requested.</div></div>
+
+     <!-- Legal Attestation -->
+     <div class="section-card" style="margin-top:16px;border:2px solid var(--border)">
+      <div style="display:flex;align-items:flex-start;gap:12px">
+       <input type="checkbox" id="attest-checkbox" onclick="toggleSubmitBtn()" style="width:20px;height:20px;accent-color:var(--accent);cursor:pointer;flex-shrink:0;margin-top:2px">
+       <label for="attest-checkbox" style="cursor:pointer">
+        <div style="font-size:14px;font-weight:600;margin-bottom:6px">Certification & Attestation</div>
+        <div style="font-size:13px;color:var(--text-sec);line-height:1.6">I certify that the information contained in this report is accurate and complete to the best of my knowledge. I understand that this report is being submitted to the state regulatory agency and that knowingly submitting false information may result in penalties under applicable state and federal law. I am authorized to submit this report on behalf of the water system identified above.</div>
+       </label>
+      </div>
+     </div>
+
+     <div class="inline-actions">
+      <button class="btn" onclick="morNavigate(2)">← Back to Review</button>
+      <button class="btn btn-primary" id="submit-to-state-btn" onclick="morNavigate(4)" disabled style="opacity:0.5;cursor:not-allowed"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13m11-11l-7 20-4-9-9-4 20-7z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Submit to State</button>
+     </div>
+    </div>
+   </div>
+
+   <!-- Step 5: Success -->
+   <div class="screen" id="mor-s-success">
+    <div class="import-content">
+     <div class="success-hero">
+      <div class="success-circle"><svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="success-title">Report Submitted Successfully</div>
+      <div class="success-sub">Your Water Quality Monthly Report for March 2026 has been submitted to the state for review. You'll be notified when it's reviewed.</div>
+     </div>
+     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;text-align:center">
+      <div class="summary-card"><div class="summary-label">Results Imported</div><div class="summary-val">18</div></div>
+      <div class="summary-card"><div class="summary-label">Report Status</div><div class="summary-val" style="font-size:16px;color:var(--accent)">Submitted</div></div>
+      <div class="summary-card"><div class="summary-label">Submitted To</div><div class="summary-val" style="font-size:14px">Indiana IDEM</div></div>
+     </div>
+     <div class="audit-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="currentColor" stroke-width="2"/></svg> Audit trail</div>
+     <div class="audit-list">
+      <div class="audit-row"><span class="audit-time">10:14:02 AM</span><span class="audit-dot"></span><span>File uploaded by <strong>AD</strong></span></div>
+      <div class="audit-row"><span class="audit-time">10:14:04 AM</span><span class="audit-dot"></span><span>File type detected: PDF (Lab Results)</span></div>
+      <div class="audit-row"><span class="audit-time">10:14:22 AM</span><span class="audit-dot"></span><span>Extraction complete — 18 results, 6 analytes, 2 flagged for review</span></div>
+      <div class="audit-row"><span class="audit-time">10:16:45 AM</span><span class="audit-dot"></span><span>User reviewed and confirmed all 18 results</span></div>
+      <div class="audit-row"><span class="audit-time">10:17:01 AM</span><span class="audit-dot"></span><span>Report submitted to Indiana IDEM for review</span></div>
+     </div>
+     <div class="inline-actions">
+      <button class="btn" onclick="closeMORImport()">← Back to Reports</button>
+      <button class="btn btn-primary" onclick="closeMORImport();switchToStateDash()">View in State Dash ›</button>
+     </div>
+    </div>
+   </div>
+
+  </div>
+ </div>
+ <div class="import-bottom" id="mor-import-bottom">
+  <div class="import-bottom-left"><button class="btn btn-sm" id="mor-bb-back" onclick="morPrevStep()">‹ Back</button></div>
+  <div class="import-bottom-right"><button class="btn btn-sm" onclick="closeMORImport()">Cancel</button><button class="btn btn-primary btn-sm" id="mor-bb-next" onclick="morNextStep()">Continue ›</button></div>
+ </div>
+</div>
+
+
+<!-- =========================================== -->
+<!-- STATE DASH: MOR REVIEW DRAWER               -->
+<!-- =========================================== -->
+<div class="review-drawer-overlay" id="rd-overlay">
+ <div class="review-drawer">
+  <div class="rd-header">
+   <div class="rd-title" id="rd-title">MOR Review</div>
+   <button class="rd-close" onclick="closeReviewDrawer()">×</button>
+  </div>
+  <div class="rd-body" id="rd-body"></div>
+  <div class="rd-actions" id="rd-actions">
+   <button class="btn btn-danger" onclick="rejectMOR()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M15 9l-6 6m0-6l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Reject</button>
+   <button class="btn btn-success" onclick="approveMOR()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg> Accept</button>
+   <button class="btn btn-primary" onclick="approveAndNextMOR()">Accept & Next ›</button>
+  </div>
+ </div>
+</div>
+
+<!-- BULK ACTION BAR -->
+<div class="bulk-bar" id="bulk-bar">
+ <span class="bulk-count" id="bulk-count">0 selected</span>
+ <button class="btn btn-sm btn-success" onclick="bulkApprove()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg> Accept Selected</button>
+ <button class="btn btn-sm btn-danger" onclick="bulkReject()">Reject Selected</button>
+ <button class="btn btn-sm btn-ghost" onclick="clearSelection()">Clear Selection</button>
+</div>
+
+
+<!-- TOAST -->
+<div class="toast" id="toast"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round"/></svg><span id="toast-msg"></span></div>
+
+<!-- TEMPLATE BUILDER OVERLAY -->
+<div class="tmpl-overlay" id="tmpl-builder-overlay">
+ <div class="tmpl-nav">
+  <div class="import-nav-left">
+   <a onclick="closeTemplateBuilder()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M19 12H5m0 0l7 7m-7-7l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a>
+   <a onclick="closeTemplateBuilder()">Back to Templates</a>
+  </div>
+  <div class="import-nav-center" id="tmpl-builder-title">Edit Template</div>
+ </div>
+ <div class="tmpl-body">
+  <div class="tmpl-content">
+   <div class="import-title" id="tmpl-edit-name">Water Quality Monthly Report</div>
+   <div class="import-desc" id="tmpl-edit-desc">Standard monthly report for water quality parameters required by the state.</div>
+
+   <div class="section-card" style="margin-bottom:20px">
+    <div class="section-title">Template Details</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px">
+     <div><label style="font-size:12px;font-weight:600;color:var(--text-sec);display:block;margin-bottom:4px">Template Name</label><input id="tmpl-name-input" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:14px;font-family:var(--font)" value="Water Quality Monthly Report"></div>
+     <div><label style="font-size:12px;font-weight:600;color:var(--text-sec);display:block;margin-bottom:4px">Status</label><select style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:14px;font-family:var(--font);background:var(--white)"><option selected>Active</option><option>Draft</option></select></div>
+    </div>
+    <div style="margin-top:12px"><label style="font-size:12px;font-weight:600;color:var(--text-sec);display:block;margin-bottom:4px">Description</label><textarea style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:var(--font);min-height:60px;resize:vertical">Standard monthly report for water quality parameters required by the state.</textarea></div>
+   </div>
+
+   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <div style="font-size:16px;font-weight:700">Fields <span style="font-size:13px;font-weight:400;color:var(--text-sec)" id="tmpl-field-count">(42 fields)</span></div>
+    <button class="btn btn-sm btn-primary"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14m-7-7h14" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg> Add Field</button>
+   </div>
+
+   <div style="margin-bottom:8px;padding:8px 12px;background:var(--bg);border-radius:var(--radius);font-size:11px;font-weight:700;color:var(--text-hint);text-transform:uppercase;letter-spacing:.4px">General Information</div>
+   <div id="tmpl-fields-list"></div>
+
+   <div class="inline-actions" style="margin-top:32px">
+    <button class="btn" onclick="closeTemplateBuilder()">Cancel</button>
+    <button class="btn btn-primary" onclick="closeTemplateBuilder();showToast('Template saved successfully')">Save Template</button>
+   </div>
+  </div>
+ </div>
+</div>
+
+<script>
+// ========== DATA ==========
+var MOR_REPORTS = [
+ {period:'April 2026',name:'Water Quality Monthly Report',facility:'WTP-01 Main Plant',template:'Water Quality Monthly',results:0,exceedances:0,status:'Draft',submitted:'—',statusCls:'draft'},
+ {period:'April 2026',name:'Lead & Copper Compliance',facility:'Distribution System',template:'Lead & Copper Compliance',results:0,exceedances:0,status:'Draft',submitted:'—',statusCls:'draft'},
+ {period:'April 2026',name:'Disinfection Byproducts',facility:'WTP-01 Main Plant',template:'Disinfection Byproduct Report',results:0,exceedances:0,status:'Draft',submitted:'—',statusCls:'draft'},
+ {period:'March 2026',name:'Water Quality Monthly Report',facility:'WTP-01 Main Plant',template:'Water Quality Monthly',results:18,exceedances:2,status:'Submitted',submitted:'Apr 15, 2026',statusCls:'submitted',exceedanceList:[{field:'Arsenic',value:'0.012',unit:'mg/L',mcl:'0.010'},{field:'TTHM',value:'84.0',unit:'ug/L',mcl:'80.0'}]},
+ {period:'March 2026',name:'Lead & Copper Compliance',facility:'Distribution System',template:'Lead & Copper Compliance',results:12,exceedances:0,status:'Submitted',submitted:'Apr 10, 2026',statusCls:'submitted'},
+ {period:'February 2026',name:'Water Quality Monthly Report',facility:'WTP-01 Main Plant',template:'Water Quality Monthly',results:18,exceedances:1,status:'Submitted',submitted:'Mar 5, 2026',statusCls:'submitted',exceedanceList:[{field:'TTHM',value:'82.5',unit:'ug/L',mcl:'80.0'}]},
+ {period:'February 2026',name:'Lead & Copper Compliance',facility:'Distribution System',template:'Lead & Copper Compliance',results:14,exceedances:0,status:'Submitted',submitted:'Mar 3, 2026',statusCls:'submitted'}
+];
+
+var MOR_REVIEW_RESULTS = [
+ {field:'Lead',value:'0.012',unit:'mg/L',mcl:'0.015',method:'EPA 200.8',conf:99,flag:false},
+ {field:'Copper',value:'0.87',unit:'mg/L',mcl:'1.3',method:'EPA 200.8',conf:98,flag:false},
+ {field:'Nitrate',value:'4.2',unit:'mg/L',mcl:'10.0',method:'EPA 300.0',conf:99,flag:false},
+ {field:'Fluoride',value:'1.8',unit:'mg/L',mcl:'4.0',method:'EPA 300.0',conf:96,flag:false},
+ {field:'Arsenic',value:'0.012',unit:'mg/L',mcl:'0.010',method:'EPA 200.8',conf:68,flag:true},
+ {field:'Barium',value:'0.54',unit:'mg/L',mcl:'2.0',method:'EPA 200.7',conf:99,flag:false},
+ {field:'Chromium',value:'0.018',unit:'mg/L',mcl:'0.1',method:'EPA 200.8',conf:97,flag:false},
+ {field:'TTHM',value:'84.0',unit:'ug/L',mcl:'80.0',method:'EPA 524.2',conf:71,flag:true},
+ {field:'HAA5',value:'48.3',unit:'ug/L',mcl:'60.0',method:'EPA 552.2',conf:94,flag:false},
+ {field:'Total Coliform',value:'Absent',unit:'P/A',mcl:'Present','method':'SM 9223B',conf:99,flag:false},
+ {field:'E. coli',value:'Absent',unit:'P/A',mcl:'Present',method:'SM 9223B',conf:99,flag:false},
+ {field:'Chlorine Residual',value:'1.2',unit:'mg/L',mcl:'4.0',method:'SM 4500-Cl',conf:95,flag:false},
+ {field:'pH',value:'7.4',unit:'SU',mcl:'6.5–8.5',method:'SM 4500-H',conf:97,flag:false},
+ {field:'Turbidity',value:'0.15',unit:'NTU',mcl:'1.0',method:'EPA 180.1',conf:99,flag:false},
+ {field:'Alkalinity',value:'180',unit:'mg/L',mcl:'—',method:'SM 2320',conf:93,flag:false},
+ {field:'Hardness',value:'220',unit:'mg/L',mcl:'—',method:'SM 2340',conf:91,flag:false},
+ {field:'Iron',value:'0.08',unit:'mg/L',mcl:'0.3',method:'EPA 200.7',conf:96,flag:false},
+ {field:'Manganese',value:'0.02',unit:'mg/L',mcl:'0.05',method:'EPA 200.8',conf:94,flag:false}
+];
+
+var SD_MOR_QUEUE = [
+ {id:1,utility:'Carmel Water Department',report:'Water Quality Monthly Report',period:'March 2026',submitted:'Apr 15, 2026',results:18,fields:42,contact:'Alex Davis',status:'Pending Review',selected:false},
+ {id:2,utility:'Greenfield Water Dept',report:'Water Quality Monthly Report',period:'March 2026',submitted:'Apr 14, 2026',results:16,fields:42,contact:'Maria Chen',status:'Pending Review',selected:false},
+ {id:3,utility:'Westfield Water Works',report:'Lead & Copper Compliance',period:'March 2026',submitted:'Apr 16, 2026',results:12,fields:35,contact:'Tom Harris',status:'Pending Review',selected:false},
+ {id:4,utility:'Noblesville Municipal Water',report:'Water Quality Monthly Report',period:'March 2026',submitted:'Apr 17, 2026',results:20,fields:42,contact:'Sarah Kim',status:'Pending Review',selected:false}
+];
+
+// ========== SAMPLE MANAGER FUNCTIONS ==========
+function showSMTab(tab) {
+ document.getElementById('sm-mor-content').style.display = 'block';
+}
+
+function buildMORTable() {
+ var tb = document.getElementById('mor-table-body');
+ var h = '';
+ MOR_REPORTS.forEach(function(r,i) {
+  h += '<tr>';
+  h += '<td style="font-weight:600">'+r.period+'</td>';
+  h += '<td><span class="tbl-link" onclick="openReportViewer('+i+')">'+r.name+'</span></td>';
+  h += '<td style="font-size:13px;color:var(--text-sec)">'+r.facility+'</td>';
+  h += '<td style="font-size:13px;color:var(--text-sec)">'+r.template+'</td>';
+  // Exceedances column
+  if(r.statusCls==='draft') {
+   h += '<td style="color:var(--text-hint);font-size:13px">—</td>';
+  } else if(r.exceedances > 0) {
+   h += '<td><span class="exceedance-link" onclick="openExceedanceDrawer('+i+')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> '+r.exceedances+' exceedance'+(r.exceedances!==1?'s':'')+'</span></td>';
+  } else {
+   h += '<td><span class="no-exceedance"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> None</span></td>';
+  }
+  h += '<td><span class="td-status '+r.statusCls+'">'+r.status+'</span></td>';
+  h += '<td style="font-size:13px;color:var(--text-sec)">'+r.submitted+'</td>';
+  h += '<td>';
+  if(r.statusCls==='draft') h += '<button class="btn btn-primary btn-sm" onclick="openMORImport()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 16V4m0 0l-4 4m4-4l4 4" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg> Upload Results</button>';
+  else h += '<button class="tbl-action-btn" onclick="openReportViewer('+i+')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg> View</button>';
+  h += '</td></tr>';
+ });
+ tb.innerHTML = h;
+}
+
+// ========== MOR IMPORT FLOW ==========
+var morCurrentStep = 0;
+var MOR_STEPS = [
+ {id:'mor-s-upload',label:'Upload File',sub:'Select results PDF'},
+ {id:'mor-s-processing',label:'Processing',sub:'Extracting data'},
+ {id:'mor-s-review',label:'Review & Edit',sub:'Verify results'},
+ {id:'mor-s-submit',label:'Submit to State',sub:'Final confirmation'},
+ {id:'mor-s-success',label:'Complete',sub:'Submission sent'}
+];
+
+function openMORImport() {
+ morCurrentStep = 0;
+ document.getElementById('mor-import-overlay').classList.add('open');
+ document.getElementById('mor-dropzone').style.display = '';
+ document.getElementById('mor-file-list').style.display = 'none';
+ document.getElementById('mor-upload-actions').style.display = 'none';
+ morShowScreen('mor-s-upload');
+ morBuildSidebar();
+}
+
+function closeMORImport() {
+ document.getElementById('mor-import-overlay').classList.remove('open');
+}
+
+function morShowScreen(id) {
+ document.querySelectorAll('#mor-import-main .screen').forEach(function(s){s.classList.remove('visible');});
+ document.getElementById(id).classList.add('visible');
+ document.getElementById('mor-import-main').scrollTop = 0;
+}
+
+function morBuildSidebar() {
+ var el = document.getElementById('mor-import-sidebar');
+ var h = '<div class="sidebar-label">Import progress</div>';
+ MOR_STEPS.forEach(function(s,i) {
+  var cls = 'sidebar-item'+(i===morCurrentStep?' active':'')+(i<morCurrentStep?' done':'');
+  h += '<div class="'+cls+'"><span class="si-num">'+(i<morCurrentStep?'✓':(i+1))+'</span>'+s.label+'</div>';
+  if(i===morCurrentStep) h += '<div class="sidebar-sub active-sub">'+s.sub+'</div>';
+ });
+ el.innerHTML = h;
+}
+
+function morNavigate(step) {
+ morCurrentStep = step;
+ morShowScreen(MOR_STEPS[step].id);
+ morBuildSidebar();
+ if(step===1) morRunProcessing();
+ if(step===2) morBuildReviewTable();
+ var nx = document.getElementById('mor-bb-next');
+ nx.style.display = (step===1||step===4)?'none':'';
+ if(step===4) nx.style.display = 'none';
+}
+
+function morNextStep() {
+ if(morCurrentStep >= 4) { closeMORImport(); return; }
+ morNavigate(morCurrentStep + 1);
+}
+
+function morPrevStep() {
+ if(morCurrentStep === 0) { closeMORImport(); return; }
+ morNavigate(morCurrentStep - 1);
+}
+
+function morSimulateUpload() {
+ var fl = document.getElementById('mor-file-list');
+ fl.innerHTML = '<div class="file-item"><div class="file-badge pdf">PDF</div><div class="file-info"><div class="file-name">March_Lab_Results.pdf</div><div class="file-meta">1.8 MB · 8 pages</div></div><span class="status-ready">Ready</span><button class="file-remove" onclick="this.closest(\'.file-item\').remove()">×</button></div>';
+ fl.style.display = 'block';
+ document.getElementById('mor-dropzone').style.display = 'none';
+ document.getElementById('mor-upload-actions').style.display = 'flex';
+}
+
+function morRunProcessing() {
+ var steps = [
+  {pct:15,title:'Detecting file type...',step:0},
+  {pct:40,title:'Identifying report fields...',step:1},
+  {pct:70,title:'Extracting results data...',step:2},
+  {pct:100,title:'Mapping to report template...',step:3}
+ ];
+ var circle = document.getElementById('mor-prog-circle');
+ var pctEl = document.getElementById('mor-prog-pct');
+ var titleEl = document.getElementById('mor-prog-title');
+ circle.style.strokeDashoffset = '263.9';
+ pctEl.textContent = '0%';
+ for(var i=0;i<4;i++){
+  var as = document.getElementById('mor-as'+i);
+  as.querySelector('.agent-dot').className = 'agent-dot pending';
+  as.querySelector('.agent-check').style.display = 'none';
+ }
+ steps.forEach(function(s,idx) {
+  setTimeout(function() {
+   var offset = 263.9 - (263.9 * s.pct / 100);
+   circle.style.strokeDashoffset = offset;
+   pctEl.textContent = s.pct + '%';
+   titleEl.textContent = s.title;
+   var as = document.getElementById('mor-as'+s.step);
+   as.querySelector('.agent-dot').className = 'agent-dot active';
+   as.querySelector('.agent-check').style.display = 'none';
+   if(s.step > 0) {
+    var prev = document.getElementById('mor-as'+(s.step-1));
+    prev.querySelector('.agent-dot').className = 'agent-dot done';
+    prev.querySelector('.agent-check').style.display = '';
+   }
+   if(s.pct === 100) {
+    setTimeout(function() {
+     as.querySelector('.agent-dot').className = 'agent-dot done';
+     as.querySelector('.agent-check').style.display = '';
+     setTimeout(function(){ morNavigate(2); }, 600);
+    }, 800);
+   }
+  }, 800 * (idx + 1));
+ });
+}
+
+function morBuildReviewTable() {
+ var tb = document.getElementById('mor-review-tbody');
+ var h = '';
+ MOR_REVIEW_RESULTS.forEach(function(r) {
+  var isHigh = r.conf >= 80;
+  // Detect MCL exceedance
+  var exceedance = false;
+  if(r.mcl !== '—' && r.mcl !== 'Present' && !r.mcl.includes('–')) {
+   exceedance = parseFloat(r.value) > parseFloat(r.mcl);
+  }
+  var rowBg = exceedance ? 'background:#fef2f2' : (r.flag ? 'background:#fffcf2' : '');
+  h += '<tr'+(rowBg?' style="'+rowBg+'"':'')+'>';
+  h += '<td style="font-weight:500">'+r.field+'</td>';
+  h += '<td><input class="cell-input'+(r.flag?' warn':'')+(exceedance?' warn':'')+'" value="'+r.value+'" style="max-width:80px'+(exceedance?';color:var(--red);font-weight:600':'')+'"></td>';
+  h += '<td>'+r.unit+'</td><td>'+r.mcl+'</td><td>'+r.method+'</td>';
+  h += '<td><span class="conf-badge '+(isHigh?'high':'review')+'"><span class="conf-badge-dot"></span> '+(isHigh?'High':'Review')+'</span></td>';
+  if(exceedance) {
+   h += '<td><span style="display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;color:var(--amber);background:var(--amber-bg);padding:3px 8px;border-radius:10px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Exceeds MCL</span></td>';
+  } else {
+   h += '<td><span class="td-status '+(isHigh?'analyzed':'sent')+'" style="font-size:10px;padding:2px 8px">'+(isHigh?'Ready':'Review')+'</span></td>';
+  }
+  h += '</tr>';
+  // Inline alert row for exceedances
+  if(exceedance) {
+   h += '<tr style="background:#fef2f2"><td colspan="7" style="padding:6px 16px 10px;border-bottom:1px solid #f0c4c4">';
+   h += '<div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-sec)">';
+   h += '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="flex-shrink:0"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="var(--amber)" stroke-width="2" stroke-linecap="round"/></svg>';
+   h += '<span><strong style="color:var(--text)">'+r.field+'</strong> result of <strong style="color:var(--red)">'+r.value+' '+r.unit+'</strong> exceeds the MCL of <strong>'+r.mcl+' '+r.unit+'</strong>. Please verify this value before submitting.</span>';
+   h += '</div></td></tr>';
+  }
+ });
+ tb.innerHTML = h;
+}
+
+
+// ========== VIEW SWITCHING ==========
+function switchToStateDash() {
+ document.getElementById('view-sample-manager').style.display = 'none';
+ document.getElementById('view-state-dash').style.display = 'block';
+ window.scrollTo(0,0);
+ showSDView('landing');
+}
+
+function switchToSampleManager() {
+ document.getElementById('view-state-dash').style.display = 'none';
+ document.getElementById('view-sample-manager').style.display = 'block';
+ window.scrollTo(0,0);
+}
+
+function showSDView(view) {
+ var landing = document.getElementById('sd-landing');
+ var templates = document.getElementById('sd-templates-content');
+ var review = document.getElementById('sd-review-content');
+ var submissions = document.getElementById('sd-submissions-content');
+ var navLinks = document.querySelectorAll('.nav-sd .nav-link');
+ // Hide all
+ landing.style.display = 'none';
+ templates.style.display = 'none';
+ review.style.display = 'none';
+ submissions.style.display = 'none';
+ // Always keep MOR nav active
+ navLinks.forEach(function(l){l.classList.remove('active');});
+ navLinks[3].classList.add('active');
+ if(view === 'landing') {
+  landing.style.display = 'block';
+ } else if(view === 'templates') {
+  templates.style.display = 'block';
+ } else if(view === 'review') {
+  review.style.display = 'block';
+  buildSDQueue();
+ } else if(view === 'submissions') {
+  submissions.style.display = 'block';
+  buildSubmissionsTable();
+ }
+ window.scrollTo(0,0);
+}
+
+
+
+
+// ========== STATE DASH FUNCTIONS ==========
+
+function buildSDQueue() {
+ var el = document.getElementById('mor-queue-list');
+ var h = '';
+ var pendingCount = 0;
+ SD_MOR_QUEUE.forEach(function(m,i) {
+  if(m.status === 'hidden') return;
+  if(m.status === 'Pending Review') pendingCount++;
+  var statusCls = m.status==='Accepted'?'approved':m.status==='Rejected'?'rejected':'pending';
+  h += '<div class="mor-queue-card'+(m.selected?' selected':'')+'" id="mor-q-'+m.id+'" onclick="openReviewDrawer('+i+')" style="cursor:pointer">';
+  h += '<div class="mor-queue-header">';
+  h += '<div style="display:flex;align-items:center;gap:10px">';
+  if(m.status==='Pending Review') h += '<input type="checkbox" '+(m.selected?'checked':'')+' onclick="event.stopPropagation();toggleMORSelect('+i+')" style="width:18px;height:18px;accent-color:var(--accent);cursor:pointer;flex-shrink:0">';
+  h += '<div class="mor-queue-title">'+m.utility+'</div>';
+  h += '</div>';
+  h += '<span class="td-status '+statusCls+'">'+m.status+'</span></div>';
+  h += '<div class="mor-queue-meta"'+(m.status==='Pending Review'?' style="padding-left:28px"':'')+'>';
+  h += '<span><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="currentColor" stroke-width="1.5"/></svg> '+m.report+'</span>';
+  h += '<span>Period: '+m.period+'</span>';
+  h += '<span>Submitted: '+m.submitted+'</span>';
+  h += '<span>'+m.results+' results / '+m.fields+' fields</span>';
+  h += '</div>';
+  h += '</div>';
+ });
+ if(!h) h = '<div style="text-align:center;padding:60px 20px;color:var(--text-hint)"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" style="margin-bottom:12px"><path d="M20 6L9 17l-5-5" stroke="var(--green)" stroke-width="2" stroke-linecap="round"/></svg><div style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:4px">All caught up!</div><div>No reports pending review.</div></div>';
+ el.innerHTML = h;
+ // Update select-all checkbox state
+ var cb = document.getElementById('sd-select-all-cb');
+ if(cb) {
+  var allSelected = pendingCount > 0 && SD_MOR_QUEUE.every(function(m){return m.status!=='Pending Review' || m.selected;});
+  var someSelected = SD_MOR_QUEUE.some(function(m){return m.selected;});
+  cb.checked = allSelected;
+  cb.indeterminate = someSelected && !allSelected;
+ }
+ updateBulkBar();
+}
+
+function toggleSelectAllMOR() {
+ var anyUnselected = SD_MOR_QUEUE.some(function(m){return !m.selected && m.status==='Pending Review';});
+ SD_MOR_QUEUE.forEach(function(m){if(m.status==='Pending Review') m.selected = anyUnselected;});
+ buildSDQueue();
+}
+
+function toggleMORSelect(idx) {
+ SD_MOR_QUEUE[idx].selected = !SD_MOR_QUEUE[idx].selected;
+ buildSDQueue();
+}
+
+function updateBulkBar() {
+ var count = SD_MOR_QUEUE.filter(function(m){return m.selected;}).length;
+ document.getElementById('bulk-count').textContent = count + ' selected';
+ document.getElementById('bulk-bar').classList.toggle('visible', count > 0);
+}
+
+function clearSelection() {
+ SD_MOR_QUEUE.forEach(function(m){m.selected = false;});
+ buildSDQueue();
+}
+
+function bulkApprove() {
+ SD_MOR_QUEUE.forEach(function(m) {
+  if(m.selected) { m.status = 'Accepted'; m.selected = false; }
+ });
+ buildSDQueue();
+ // Update count
+ updatePendingCount();
+}
+
+function bulkReject() {
+ SD_MOR_QUEUE.forEach(function(m) {
+  if(m.selected) { m.status = 'Rejected'; m.selected = false; }
+ });
+ buildSDQueue();
+ updatePendingCount();
+}
+
+function quickApprove(idx) {
+ SD_MOR_QUEUE[idx].status = 'Accepted';
+ SD_MOR_QUEUE[idx].selected = false;
+ buildSDQueue();
+ updatePendingCount();
+}
+
+function updatePendingCount() {
+ var pending = SD_MOR_QUEUE.filter(function(m){return m.status==='Pending Review';}).length;
+ // Update filter dropdown
+ var dd = document.getElementById('sd-filter');
+ if(dd) dd.options[0].text = 'Pending Review ('+pending+')';
+ // Update or hide the review banner on landing
+ var banner = document.getElementById('sd-review-banner');
+ if(banner) {
+  if(pending === 0) {
+   banner.style.display = 'none';
+  } else {
+   banner.style.display = 'flex';
+   var names = SD_MOR_QUEUE.filter(function(m){return m.status==='Pending Review';}).map(function(m){return m.utility.split(' ')[0];});
+   banner.querySelector('div > span:first-child').textContent = pending + ' submission'+(pending!==1?'s':'')+' pending review';
+   banner.querySelector('div > span:last-child').textContent = ' · From ' + names.join(', ');
+  }
+ }
+}
+
+// ========== REVIEW DRAWER ==========
+var currentReviewIdx = -1;
+
+function openReviewDrawer(idx) {
+ currentReviewIdx = idx;
+ var m = SD_MOR_QUEUE[idx];
+ document.getElementById('rd-title').textContent = m.utility + ' — MOR Review';
+
+ var h = '';
+ h += '<div class="rd-section"><div class="rd-section-title">Report Information</div>';
+ h += '<div class="rd-field-row"><span class="rd-field-label">Utility</span><span class="rd-field-value">'+m.utility+'</span></div>';
+ h += '<div class="rd-field-row"><span class="rd-field-label">Report</span><span class="rd-field-value">'+m.report+'</span></div>';
+ h += '<div class="rd-field-row"><span class="rd-field-label">Period</span><span class="rd-field-value">'+m.period+'</span></div>';
+ h += '<div class="rd-field-row"><span class="rd-field-label">Submitted</span><span class="rd-field-value">'+m.submitted+'</span></div>';
+ h += '<div class="rd-field-row"><span class="rd-field-label">Contact</span><span class="rd-field-value">'+m.contact+'</span></div>';
+ h += '<div class="rd-field-row"><span class="rd-field-label">Results / Fields</span><span class="rd-field-value">'+m.results+' / '+m.fields+'</span></div>';
+ h += '</div>';
+
+ // Show sample results
+ h += '<div class="rd-section"><div class="rd-section-title">Submitted Results (Sample)</div>';
+ h += '<div class="tbl-wrap"><table style="font-size:12px"><thead><tr><th>Analyte</th><th>Result</th><th>Unit</th><th>MCL</th><th>Method</th></tr></thead><tbody>';
+ var sampleResults = MOR_REVIEW_RESULTS.slice(0, 8);
+ sampleResults.forEach(function(r) {
+  var overMCL = false;
+  if(r.mcl !== '—' && r.mcl !== 'Present' && !r.mcl.includes('–')) {
+   overMCL = parseFloat(r.value) > parseFloat(r.mcl);
+  }
+  h += '<tr><td>'+r.field+'</td><td style="'+(overMCL?'color:var(--red);font-weight:700':'')+'">'+(overMCL?'⚠ ':'')+r.value+'</td><td>'+r.unit+'</td><td>'+r.mcl+'</td><td>'+r.method+'</td></tr>';
+ });
+ h += '<tr><td colspan="5" style="text-align:center;color:var(--text-hint);font-style:italic">+'+(m.results - 8)+' more results...</td></tr>';
+ h += '</tbody></table></div></div>';
+
+ // Rejection notes (if needed)
+ h += '<div class="rd-section"><div class="rd-section-title">Review Notes (Optional)</div>';
+ h += '<textarea style="width:100%;min-height:80px;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:var(--font);color:var(--text);resize:vertical" placeholder="Add notes for the utility (required if rejecting)..." id="rd-notes"></textarea></div>';
+
+ document.getElementById('rd-body').innerHTML = h;
+
+ // Show/hide actions based on status
+ var actionsEl = document.getElementById('rd-actions');
+ if(m.status === 'Pending Review') {
+  actionsEl.style.display = 'flex';
+ } else {
+  actionsEl.style.display = 'none';
+ }
+
+ document.getElementById('rd-overlay').classList.add('open');
+}
+
+function closeReviewDrawer() {
+ document.getElementById('rd-overlay').classList.remove('open');
+}
+
+function approveMOR() {
+ if(currentReviewIdx < 0) return;
+ SD_MOR_QUEUE[currentReviewIdx].status = 'Accepted';
+ SD_MOR_QUEUE[currentReviewIdx].selected = false;
+ closeReviewDrawer();
+ buildSDQueue();
+ updatePendingCount();
+}
+
+function rejectMOR() {
+ if(currentReviewIdx < 0) return;
+ SD_MOR_QUEUE[currentReviewIdx].status = 'Rejected';
+ SD_MOR_QUEUE[currentReviewIdx].selected = false;
+ closeReviewDrawer();
+ buildSDQueue();
+ updatePendingCount();
+}
+
+function approveAndNextMOR() {
+ if(currentReviewIdx < 0) return;
+ SD_MOR_QUEUE[currentReviewIdx].status = 'Accepted';
+ SD_MOR_QUEUE[currentReviewIdx].selected = false;
+ // Find next pending
+ var nextIdx = -1;
+ for(var i = 0; i < SD_MOR_QUEUE.length; i++) {
+  if(i !== currentReviewIdx && SD_MOR_QUEUE[i].status === 'Pending Review') {
+   nextIdx = i; break;
+  }
+ }
+ buildSDQueue();
+ updatePendingCount();
+ if(nextIdx >= 0) {
+  openReviewDrawer(nextIdx);
+ } else {
+  closeReviewDrawer();
+ }
+}
+
+// ========== TEMPLATE BUILDER ==========
+var tmplCurrentStep = 0;
+var TMPL_STEPS = [
+ {id:'tmpl-s-info',label:'Template Details',sub:'Name & settings'},
+ {id:'tmpl-s-fields',label:'Add Fields',sub:'Build your form'},
+ {id:'tmpl-s-preview',label:'Preview',sub:'Review template'},
+ {id:'tmpl-s-success',label:'Publish',sub:'Go live'}
+];
+
+var tmplFields = [];
+var tmplSections = [];
+var newFieldType = 'number';
+
+// Seed with some starter fields
+var STARTER_FIELDS = [
+ {name:'Lead',type:'number',unit:'mg/L',mcl:'0.015',method:'EPA 200.8',required:true,validate:true,help:'',section:'Inorganic Contaminants'},
+ {name:'Copper',type:'number',unit:'mg/L',mcl:'1.3',method:'EPA 200.8',required:true,validate:true,help:'',section:'Inorganic Contaminants'},
+ {name:'Nitrate',type:'number',unit:'mg/L',mcl:'10.0',method:'EPA 300.0',required:true,validate:true,help:'',section:'Inorganic Contaminants'},
+ {name:'Total Coliform',type:'pa',unit:'P/A',mcl:'Present',method:'SM 9223B',required:true,validate:false,help:'Report as Present or Absent',section:'Microbiological'},
+ {name:'E. coli',type:'pa',unit:'P/A',mcl:'Present',method:'SM 9223B',required:true,validate:false,help:'',section:'Microbiological'},
+ {name:'Chlorine Residual',type:'number',unit:'mg/L',mcl:'4.0',method:'SM 4500-Cl',required:true,validate:true,help:'Free chlorine residual at entry point',section:'Disinfection'},
+ {name:'pH',type:'number',unit:'SU',mcl:'6.5–8.5',method:'SM 4500-H',required:true,validate:false,help:'',section:'Physical Parameters'},
+ {name:'Turbidity',type:'number',unit:'NTU',mcl:'1.0',method:'EPA 180.1',required:true,validate:true,help:'',section:'Physical Parameters'},
+];
+
+function showTemplateCreator() {
+ // Open the builder with empty state for new template
+ document.getElementById('tmpl-builder-title').textContent = 'New Template';
+ document.getElementById('tmpl-edit-name').textContent = 'New Report Template';
+ document.getElementById('tmpl-edit-desc').textContent = 'Define the fields and sections for your new report template.';
+ document.getElementById('tmpl-name-input').value = '';
+ document.getElementById('tmpl-field-count').textContent = '(0 fields)';
+ document.getElementById('tmpl-fields-list').innerHTML = '<div style="text-align:center;padding:40px 20px;color:var(--text-hint);border:2px dashed var(--border);border-radius:var(--radius-lg)"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" style="margin-bottom:8px"><path d="M12 5v14m-7-7h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><div style="font-size:14px;font-weight:600;color:var(--text)">No fields yet</div><div style="font-size:13px">Click "Add Field" to start building your template.</div></div>';
+ document.getElementById('tmpl-builder-overlay').classList.add('open');
+}
+
+// ========== REPORT VIEWER ==========
+var PREV_REPORT_DATA = {
+ 'March 2026': {results:[{f:'Lead',v:'0.012',u:'mg/L',mcl:'0.015',m:'EPA 200.8'},{f:'Copper',v:'0.87',u:'mg/L',mcl:'1.3',m:'EPA 200.8'},{f:'Nitrate',v:'4.2',u:'mg/L',mcl:'10.0',m:'EPA 300.0'},{f:'Fluoride',v:'1.8',u:'mg/L',mcl:'4.0',m:'EPA 300.0'},{f:'TTHM',v:'62.0',u:'ug/L',mcl:'80.0',m:'EPA 524.2'},{f:'HAA5',v:'48.3',u:'ug/L',mcl:'60.0',m:'EPA 552.2'},{f:'Total Coliform',v:'Absent',u:'P/A',mcl:'Present',m:'SM 9223B'},{f:'E. coli',v:'Absent',u:'P/A',mcl:'Present',m:'SM 9223B'},{f:'Chlorine Residual',v:'1.2',u:'mg/L',mcl:'4.0',m:'SM 4500-Cl'},{f:'pH',v:'7.4',u:'SU',mcl:'6.5–8.5',m:'SM 4500-H'},{f:'Turbidity',v:'0.15',u:'NTU',mcl:'1.0',m:'EPA 180.1'},{f:'Alkalinity',v:'180',u:'mg/L',mcl:'—',m:'SM 2320'}],submitted:'Apr 15, 2026',status:'Submitted'},
+ 'February 2026': {results:[{f:'Lead',v:'0.010',u:'mg/L',mcl:'0.015',m:'EPA 200.8'},{f:'Copper',v:'0.92',u:'mg/L',mcl:'1.3',m:'EPA 200.8'},{f:'Nitrate',v:'3.8',u:'mg/L',mcl:'10.0',m:'EPA 300.0'},{f:'Fluoride',v:'1.7',u:'mg/L',mcl:'4.0',m:'EPA 300.0'},{f:'TTHM',v:'58.0',u:'ug/L',mcl:'80.0',m:'EPA 524.2'},{f:'HAA5',v:'44.1',u:'ug/L',mcl:'60.0',m:'EPA 552.2'},{f:'Total Coliform',v:'Absent',u:'P/A',mcl:'Present',m:'SM 9223B'},{f:'E. coli',v:'Absent',u:'P/A',mcl:'Present',m:'SM 9223B'},{f:'Chlorine Residual',v:'1.4',u:'mg/L',mcl:'4.0',m:'SM 4500-Cl'},{f:'pH',v:'7.3',u:'SU',mcl:'6.5–8.5',m:'SM 4500-H'},{f:'Turbidity',v:'0.12',u:'NTU',mcl:'1.0',m:'EPA 180.1'},{f:'Alkalinity',v:'175',u:'mg/L',mcl:'—',m:'SM 2320'}],submitted:'Mar 5, 2026',status:'Submitted'}
+};
+
+function openReportViewer(idx) {
+ var r = MOR_REPORTS[idx];
+ var period = r.period;
+ var data = PREV_REPORT_DATA[period];
+ document.getElementById('rv-title').textContent = r.name + ' — ' + period;
+ var h = '';
+ h += '<div class="rd-section"><div class="rd-section-title">Report Details</div>';
+ h += '<div class="rd-field-row"><span class="rd-field-label">Report</span><span class="rd-field-value">'+r.name+'</span></div>';
+ h += '<div class="rd-field-row"><span class="rd-field-label">Period</span><span class="rd-field-value">'+period+'</span></div>';
+ h += '<div class="rd-field-row"><span class="rd-field-label">Template</span><span class="rd-field-value">'+r.template+'</span></div>';
+ h += '<div class="rd-field-row"><span class="rd-field-label">Status</span><span class="rd-field-value"><span class="td-status '+r.statusCls+'">'+r.status+'</span></span></div>';
+ if(data) {
+  h += '<div class="rd-field-row"><span class="rd-field-label">Submitted</span><span class="rd-field-value">'+data.submitted+'</span></div>';
+ }
+ h += '</div>';
+ if(data) {
+  h += '<div class="rd-section"><div class="rd-section-title">Submitted Results ('+data.results.length+' fields)</div>';
+  h += '<div class="tbl-wrap"><table style="font-size:12px"><thead><tr><th>Analyte</th><th>Result</th><th>Unit</th><th>MCL</th><th>Method</th></tr></thead><tbody>';
+  data.results.forEach(function(row) {
+   h += '<tr><td style="font-weight:500">'+row.f+'</td><td>'+row.v+'</td><td>'+row.u+'</td><td>'+row.mcl+'</td><td>'+row.m+'</td></tr>';
+  });
+  h += '</tbody></table></div></div>';
+ } else {
+  h += '<div class="rd-section" style="text-align:center;padding:48px 20px">';
+  h += '<div style="width:64px;height:64px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="var(--text-hint)" stroke-width="1.5"/><path d="M14 2v6h6" stroke="var(--text-hint)" stroke-width="1.5"/></svg></div>';
+  h += '<div style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:4px">No results yet</div>';
+  h += '<div style="font-size:13px;color:var(--text-sec);max-width:300px;margin:0 auto 20px">This report hasn\'t been populated with results. Upload your lab results to get started.</div>';
+  h += '<button class="btn btn-primary" onclick="closeReportViewer();openMORImport()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 16V4m0 0l-4 4m4-4l4 4" stroke="#fff" stroke-width="2" stroke-linecap="round"/><path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg> Upload Results</button>';
+  h += '</div>';
+ }
+ document.getElementById('rv-body').innerHTML = h;
+ document.getElementById('report-viewer-overlay').classList.add('open');
+}
+
+function closeReportViewer() {
+ document.getElementById('report-viewer-overlay').classList.remove('open');
+}
+
+
+// ========== TOAST ==========
+function showToast(msg) {
+ var t = document.getElementById('toast');
+ document.getElementById('toast-msg').textContent = msg;
+ t.classList.add('visible');
+ setTimeout(function(){ t.classList.remove('visible'); }, 3500);
+}
+
+// ========== SEND REMINDERS ==========
+function sendReminders() {
+ showToast('Reminders sent — 8 utilities have been notified via email');
+}
+function sendReminder(name) {
+ showToast('Reminder sent to ' + name);
+}
+
+// ========== TEMPLATE DATA ==========
+var TEMPLATE_DATA = [
+ {name:'Water Quality Monthly Report',desc:'Standard monthly report for water quality parameters required by the state.',fields:42,utilities:127,updated:'Mar 15, 2026',status:'Active',
+  sections:[
+   {title:'General Information',fields:[
+    {name:'Facility Name',type:'Text',req:true,desc:'Name of the water treatment facility'},
+    {name:'PWS ID',type:'Text',req:true,desc:'Public Water System identification number'},
+    {name:'Report Period',type:'Date Range',req:true,desc:'Month and year of the report'},
+    {name:'Operator Name',type:'Text',req:true,desc:'Certified operator on record'},
+    {name:'Operator Certification #',type:'Text',req:true,desc:'State certification number'},
+    {name:'Population Served',type:'Number',req:false,desc:'Estimated population served'}
+   ]},
+   {title:'Inorganic Contaminants',fields:[
+    {name:'Lead (Pb)',type:'Numeric',req:true,desc:'MCL: 0.015 mg/L · EPA 200.8'},
+    {name:'Copper (Cu)',type:'Numeric',req:true,desc:'MCL: 1.3 mg/L · EPA 200.8'},
+    {name:'Arsenic (As)',type:'Numeric',req:true,desc:'MCL: 0.010 mg/L · EPA 200.8'},
+    {name:'Barium (Ba)',type:'Numeric',req:true,desc:'MCL: 2.0 mg/L · EPA 200.7'},
+    {name:'Chromium (Cr)',type:'Numeric',req:true,desc:'MCL: 0.1 mg/L · EPA 200.8'},
+    {name:'Fluoride (F)',type:'Numeric',req:true,desc:'MCL: 4.0 mg/L · EPA 300.0'},
+    {name:'Nitrate (NO3)',type:'Numeric',req:true,desc:'MCL: 10.0 mg/L · EPA 300.0'},
+    {name:'Iron (Fe)',type:'Numeric',req:false,desc:'SMCL: 0.3 mg/L · EPA 200.7'},
+    {name:'Manganese (Mn)',type:'Numeric',req:false,desc:'SMCL: 0.05 mg/L · EPA 200.8'}
+   ]},
+   {title:'Disinfection Byproducts',fields:[
+    {name:'Total Trihalomethanes (TTHM)',type:'Numeric',req:true,desc:'MCL: 80.0 ug/L · EPA 524.2'},
+    {name:'Haloacetic Acids (HAA5)',type:'Numeric',req:true,desc:'MCL: 60.0 ug/L · EPA 552.2'}
+   ]},
+   {title:'Microbiological',fields:[
+    {name:'Total Coliform',type:'Presence/Absence',req:true,desc:'MCL: Present · SM 9223B'},
+    {name:'E. coli',type:'Presence/Absence',req:true,desc:'MCL: Present · SM 9223B'}
+   ]},
+   {title:'Physical Parameters',fields:[
+    {name:'Chlorine Residual',type:'Numeric',req:true,desc:'MCL: 4.0 mg/L · SM 4500-Cl'},
+    {name:'pH',type:'Numeric',req:true,desc:'Range: 6.5–8.5 SU · SM 4500-H'},
+    {name:'Turbidity',type:'Numeric',req:true,desc:'MCL: 1.0 NTU · EPA 180.1'},
+    {name:'Alkalinity',type:'Numeric',req:false,desc:'No MCL · SM 2320'},
+    {name:'Hardness',type:'Numeric',req:false,desc:'No MCL · SM 2340'}
+   ]}
+  ]},
+ {name:'Disinfection Byproduct Report',desc:'Quarterly disinfection byproduct monitoring report.',fields:28,utilities:89,updated:'Feb 20, 2026',status:'Active',sections:[]},
+ {name:'Lead & Copper Compliance',desc:'Lead and copper rule compliance monitoring report.',fields:35,utilities:127,updated:'Jan 10, 2026',status:'Active',sections:[]},
+ {name:'Nutrient Monitoring (Draft)',desc:'Nutrient monitoring report template — in development.',fields:18,utilities:0,updated:'Apr 2, 2026',status:'Draft',sections:[]}
+];
+
+function openTemplateViewer(idx) {
+ var t = TEMPLATE_DATA[idx];
+ document.getElementById('rv-title').textContent = t.name;
+ var h = '';
+ h += '<div class="rd-section"><div class="rd-section-title">Template Details</div>';
+ h += '<div class="rd-field-row"><span class="rd-field-label">Template</span><span class="rd-field-value">'+t.name+'</span></div>';
+ h += '<div class="rd-field-row"><span class="rd-field-label">Description</span><span class="rd-field-value">'+t.desc+'</span></div>';
+ h += '<div class="rd-field-row"><span class="rd-field-label">Fields</span><span class="rd-field-value">'+t.fields+'</span></div>';
+ h += '<div class="rd-field-row"><span class="rd-field-label">Utilities Using</span><span class="rd-field-value">'+t.utilities+'</span></div>';
+ h += '<div class="rd-field-row"><span class="rd-field-label">Last Updated</span><span class="rd-field-value">'+t.updated+'</span></div>';
+ h += '<div class="rd-field-row"><span class="rd-field-label">Status</span><span class="rd-field-value"><span class="td-status '+(t.status==='Active'?'approved':'draft')+'">'+t.status+'</span></span></div>';
+ h += '</div>';
+ if(t.sections.length > 0) {
+  t.sections.forEach(function(sec) {
+   h += '<div class="rd-section"><div class="rd-section-title">'+sec.title+' ('+sec.fields.length+')</div>';
+   sec.fields.forEach(function(f) {
+    h += '<div class="tmpl-field-card">';
+    h += '<div class="tmpl-field-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="var(--accent)" stroke-width="2"/></svg></div>';
+    h += '<div class="tmpl-field-info"><div class="tmpl-field-name">'+f.name+'</div>';
+    h += '<div class="tmpl-field-meta">'+f.desc+'</div>';
+    h += '<div class="tmpl-field-badges"><span class="tmpl-field-badge type">'+f.type+'</span>';
+    h += '<span class="tmpl-field-badge '+(f.req?'req':'opt')+'">'+(f.req?'Required':'Optional')+'</span></div>';
+    h += '</div></div>';
+   });
+   h += '</div>';
+  });
+ } else {
+  h += '<div class="rd-section" style="text-align:center;padding:32px 20px;color:var(--text-hint)"><div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px">Template preview not available</div><div style="font-size:13px">Click Edit to view and modify the template fields.</div></div>';
+ }
+ h += '<div style="padding:16px 0;text-align:center"><button class="btn btn-primary" onclick="closeReportViewer();editTemplate('+idx+')">Edit Template</button></div>';
+ document.getElementById('rv-body').innerHTML = h;
+ document.getElementById('report-viewer-overlay').classList.add('open');
+}
+
+function editTemplate(idx) {
+ var t = TEMPLATE_DATA[idx];
+ document.getElementById('tmpl-builder-title').textContent = 'Edit Template';
+ document.getElementById('tmpl-edit-name').textContent = t.name;
+ document.getElementById('tmpl-edit-desc').textContent = t.desc;
+ document.getElementById('tmpl-name-input').value = t.name;
+ document.getElementById('tmpl-field-count').textContent = '('+t.fields+' fields)';
+ var el = document.getElementById('tmpl-fields-list');
+ var h = '';
+ if(t.sections.length > 0) {
+  t.sections.forEach(function(sec,si) {
+   if(si > 0) h += '<div style="margin-top:16px;margin-bottom:8px;padding:8px 12px;background:var(--bg);border-radius:var(--radius);font-size:11px;font-weight:700;color:var(--text-hint);text-transform:uppercase;letter-spacing:.4px">'+sec.title+'</div>';
+   sec.fields.forEach(function(f) {
+    h += '<div class="tmpl-field-card">';
+    h += '<div class="tmpl-field-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="var(--accent)" stroke-width="2"/></svg></div>';
+    h += '<div class="tmpl-field-info"><div class="tmpl-field-name">'+f.name+'</div>';
+    h += '<div class="tmpl-field-meta">'+f.desc+'</div>';
+    h += '<div class="tmpl-field-badges"><span class="tmpl-field-badge type">'+f.type+'</span>';
+    h += '<span class="tmpl-field-badge '+(f.req?'req':'opt')+'">'+(f.req?'Required':'Optional')+'</span></div>';
+    h += '</div>';
+    h += '<div style="display:flex;gap:4px">';
+    h += '<button style="width:28px;height:28px;border:1px solid var(--border);border-radius:4px;background:var(--white);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-hint)" title="Edit field"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" stroke="currentColor" stroke-width="2"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="2"/></svg></button>';
+    h += '<button style="width:28px;height:28px;border:1px solid var(--border);border-radius:4px;background:var(--white);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-hint)" title="Delete field"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6h14z" stroke="currentColor" stroke-width="2"/></svg></button>';
+    h += '</div></div>';
+   });
+  });
+ } else {
+  h += '<div style="text-align:center;padding:40px 20px;color:var(--text-hint)"><div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px">No fields defined yet</div><div style="font-size:13px">Add fields to define what utilities need to report.</div></div>';
+ }
+ el.innerHTML = h;
+ document.getElementById('tmpl-builder-overlay').classList.add('open');
+}
+
+function closeTemplateBuilder() {
+ document.getElementById('tmpl-builder-overlay').classList.remove('open');
+}
+
+// ========== ATTESTATION ==========
+function toggleSubmitBtn() {
+ var cb = document.getElementById('attest-checkbox');
+ var btn = document.getElementById('submit-to-state-btn');
+ if(cb.checked) { btn.disabled=false; btn.style.opacity='1'; btn.style.cursor='pointer'; }
+ else { btn.disabled=true; btn.style.opacity='0.5'; btn.style.cursor='not-allowed'; }
+}
+
+// ========== UTILITIES & FACILITIES TABLE ==========
+var UF_DATA = [
+ {utility:'Avon Utilities',facility:'WTP-01 Main Plant',contact:'D. Ramirez',template:'Water Quality Monthly',status:'Submitted',submitted:'Apr 11, 2026'},
+ {utility:'Avon Utilities',facility:'Distribution System',contact:'D. Ramirez',template:'Lead & Copper Compliance',status:'Submitted',submitted:'Apr 11, 2026'},
+ {utility:'Brownsburg Water',facility:'WTP-02 South Plant',contact:'P. Anderson',template:'Water Quality Monthly',status:'Submitted',submitted:'Apr 8, 2026'},
+ {utility:'Brownsburg Water',facility:'Booster Station #3',contact:'P. Anderson',template:'Water Quality Monthly',status:'N/A',submitted:'—'},
+ {utility:'Carmel Water Department',facility:'WTP-01 Main Plant',contact:'Alex Davis',template:'Water Quality Monthly',status:'Submitted',submitted:'Apr 15, 2026'},
+ {utility:'Carmel Water Department',facility:'Distribution System',contact:'Alex Davis',template:'Lead & Copper Compliance',status:'Submitted',submitted:'Apr 14, 2026'},
+ {utility:'Fishers Utility',facility:'WTP-01 Main Plant',contact:'J. Whitfield',template:'Water Quality Monthly',status:'Submitted',submitted:'Apr 10, 2026'},
+ {utility:'Greenfield Water Dept',facility:'WTP-01 Main Plant',contact:'Maria Chen',template:'Water Quality Monthly',status:'Submitted',submitted:'Apr 14, 2026'},
+ {utility:'Lebanon Utilities',facility:'WTP-01 Main Plant',contact:'S. Nguyen',template:'Water Quality Monthly',status:'Submitted',submitted:'Apr 6, 2026'},
+ {utility:'Lebanon Utilities',facility:'WTP-01 Main Plant',contact:'S. Nguyen',template:'Disinfection Byproduct',status:'Submitted',submitted:'Mar 5, 2026'},
+ {utility:'Noblesville Municipal Water',facility:'WTP-01 Main Plant',contact:'Sarah Kim',template:'Water Quality Monthly',status:'Submitted',submitted:'Apr 17, 2026'},
+ {utility:'Westfield Water Works',facility:'WTP-01 Main Plant',contact:'Tom Harris',template:'Water Quality Monthly',status:'Submitted',submitted:'Apr 5, 2026'},
+ {utility:'Westfield Water Works',facility:'Distribution System',contact:'Tom Harris',template:'Lead & Copper Compliance',status:'Submitted',submitted:'Apr 16, 2026'},
+ {utility:'Zionsville Water',facility:'WTP-01 Main Plant',contact:'L. Franklin',template:'Water Quality Monthly',status:'Submitted',submitted:'Apr 9, 2026'},
+ {utility:'Anderson Water Authority',facility:'WTP-01 Main Plant',contact:'J. Morris',template:'Water Quality Monthly',status:'Not Submitted',submitted:'—'},
+ {utility:'Anderson Water Authority',facility:'Well House #4',contact:'J. Morris',template:'Water Quality Monthly',status:'N/A',submitted:'—'},
+ {utility:'Pendleton Municipal',facility:'WTP-01 Main Plant',contact:'R. Clark',template:'Water Quality Monthly',status:'Not Submitted',submitted:'—'},
+ {utility:'Fortville Water Dept',facility:'WTP-01 Main Plant',contact:'K. Patel',template:'Water Quality Monthly',status:'Not Submitted',submitted:'—'},
+ {utility:'McCordsville Utilities',facility:'WTP-01 Main Plant',contact:'B. Thompson',template:'Water Quality Monthly',status:'Not Submitted',submitted:'—'},
+ {utility:'Mooresville Water',facility:'WTP-01 Main Plant',contact:'C. Webb',template:'Lead & Copper Compliance',status:'Submitted',submitted:'Apr 13, 2026'},
+ {utility:'Danville Water',facility:'WTP-01 Main Plant',contact:'M. Torres',template:'Water Quality Monthly',status:'Submitted',submitted:'Apr 7, 2026'},
+ {utility:'Plainfield Water Dept',facility:'WTP-01 Main Plant',contact:'N. Shah',template:'Disinfection Byproduct',status:'Submitted',submitted:'Apr 12, 2026'}
+];
+
+function buildUFTable() { filterUFTable(); }
+
+function filterUFTable() {
+ var filter = (document.getElementById('uf-filter')||{}).value || '';
+ var filtered = UF_DATA.filter(function(r) {
+  if(filter && r.status !== filter) return false;
+  return true;
+ });
+ var tb = document.getElementById('uf-table-body');
+ var h = '';
+ filtered.forEach(function(r) {
+  var statusCls = r.status==='Submitted'?'submitted':r.status==='Not Submitted'?'rejected':'scheduled';
+  h += '<tr>';
+  h += '<td style="font-weight:500">'+r.utility+'</td>';
+  h += '<td style="font-size:12px;color:var(--text-sec)">'+r.facility+'</td>';
+  h += '<td style="font-size:12px">'+r.contact+'</td>';
+  h += '<td style="font-size:12px">'+r.template+'</td>';
+  h += '<td><span class="td-status '+statusCls+'">'+r.status+'</span></td>';
+  h += '<td style="font-size:12px;color:var(--text-sec)">'+r.submitted+'</td>';
+  if(r.status==='Not Submitted') {
+   h += '<td><button class="tbl-action-btn" onclick="sendReminder(\''+r.utility.replace(/'/g,"\\'")+'\')">Remind</button></td>';
+  } else {
+   h += '<td></td>';
+  }
+  h += '</tr>';
+ });
+ tb.innerHTML = h;
+ document.getElementById('uf-pagination').innerHTML = '<div>Showing '+filtered.length+' of '+UF_DATA.length+' entries</div>';
+}
+
+// ========== DUE BANNER TOGGLE ==========
+function toggleDueBanner() {
+ var details = document.getElementById('due-details');
+ var chevron = document.getElementById('due-chevron');
+ var isOpen = details.style.display !== 'none';
+ details.style.display = isOpen ? 'none' : 'block';
+ chevron.style.transform = isOpen ? '' : 'rotate(180deg)';
+}
+
+// ========== SETTINGS DROPDOWN ==========
+function toggleSettingsDD(id) {
+ var dd = document.getElementById(id);
+ var isOpen = dd.classList.contains('open');
+ closeAllDD();
+ if(!isOpen) dd.classList.add('open');
+}
+function closeAllDD() {
+ document.querySelectorAll('.settings-dd').forEach(function(d){d.classList.remove('open');});
+}
+document.addEventListener('click', function(e) {
+ if(!e.target.closest('.settings-wrap')) closeAllDD();
+});
+
+// ========== EXCEEDANCE DRAWER ==========
+function openExceedanceDrawer(idx) {
+ var r = MOR_REPORTS[idx];
+ if(!r.exceedanceList || r.exceedanceList.length === 0) return;
+ document.getElementById('rv-title').textContent = 'Threshold Exceedances — ' + r.period;
+ var h = '';
+ h += '<div class="rd-section"><div class="rd-section-title">Report Details</div>';
+ h += '<div class="rd-field-row"><span class="rd-field-label">Report</span><span class="rd-field-value">'+r.name+'</span></div>';
+ h += '<div class="rd-field-row"><span class="rd-field-label">Period</span><span class="rd-field-value">'+r.period+'</span></div>';
+ h += '<div class="rd-field-row"><span class="rd-field-label">Facility</span><span class="rd-field-value">'+r.facility+'</span></div>';
+ h += '</div>';
+ h += '<div class="rd-section"><div class="rd-section-title">Exceedances ('+r.exceedanceList.length+')</div>';
+ r.exceedanceList.forEach(function(ex) {
+  h += '<div style="display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:#fef2f2;border:1px solid #f0c4c4;border-radius:var(--radius);margin-bottom:8px">';
+  h += '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:1px"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="var(--amber)" stroke-width="2" stroke-linecap="round"/></svg>';
+  h += '<div style="flex:1">';
+  h += '<div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px">'+ex.field+'</div>';
+  h += '<div style="font-size:13px;color:var(--text-sec)">Result: <strong style="color:var(--red)">'+ex.value+' '+ex.unit+'</strong> · MCL: <strong>'+ex.mcl+' '+ex.unit+'</strong></div>';
+  h += '</div></div>';
+ });
+ h += '</div>';
+ document.getElementById('rv-body').innerHTML = h;
+ document.getElementById('report-viewer-overlay').classList.add('open');
+}
+
+// ========== ALL SUBMISSIONS TABLE ==========
+var ALL_SUBMISSIONS = [
+ {utility:'Carmel Water Department',report:'Water Quality Monthly',period:'March 2026',submitted:'Apr 15, 2026',results:18,exceedances:2,status:'Pending Review',template:'Water Quality Monthly'},
+ {utility:'Greenfield Water Dept',report:'Water Quality Monthly',period:'March 2026',submitted:'Apr 14, 2026',results:16,exceedances:0,status:'Pending Review',template:'Water Quality Monthly'},
+ {utility:'Westfield Water Works',report:'Lead & Copper Compliance',period:'March 2026',submitted:'Apr 16, 2026',results:12,exceedances:1,status:'Pending Review',template:'Lead & Copper Compliance'},
+ {utility:'Noblesville Municipal Water',report:'Water Quality Monthly',period:'March 2026',submitted:'Apr 17, 2026',results:20,exceedances:0,status:'Pending Review',template:'Water Quality Monthly'},
+ {utility:'Fishers Utility',report:'Water Quality Monthly',period:'March 2026',submitted:'Apr 10, 2026',results:18,exceedances:0,status:'Reviewed',template:'Water Quality Monthly'},
+ {utility:'Zionsville Water',report:'Water Quality Monthly',period:'March 2026',submitted:'Apr 9, 2026',results:17,exceedances:1,status:'Reviewed',template:'Water Quality Monthly'},
+ {utility:'Brownsburg Water',report:'Water Quality Monthly',period:'March 2026',submitted:'Apr 8, 2026',results:18,exceedances:0,status:'Reviewed',template:'Water Quality Monthly'},
+ {utility:'Avon Utilities',report:'Lead & Copper Compliance',period:'March 2026',submitted:'Apr 11, 2026',results:14,exceedances:0,status:'Reviewed',template:'Lead & Copper Compliance'},
+ {utility:'Plainfield Water Dept',report:'Disinfection Byproduct',period:'March 2026',submitted:'Apr 12, 2026',results:10,exceedances:0,status:'Reviewed',template:'Disinfection Byproduct'},
+ {utility:'Danville Water',report:'Water Quality Monthly',period:'March 2026',submitted:'Apr 7, 2026',results:18,exceedances:0,status:'Reviewed',template:'Water Quality Monthly'},
+ {utility:'Lebanon Utilities',report:'Water Quality Monthly',period:'March 2026',submitted:'Apr 6, 2026',results:16,exceedances:0,status:'Reviewed',template:'Water Quality Monthly'},
+ {utility:'Mooresville Water',report:'Lead & Copper Compliance',period:'March 2026',submitted:'Apr 13, 2026',results:12,exceedances:0,status:'Reviewed',template:'Lead & Copper Compliance'},
+ {utility:'Westfield Water Works',report:'Water Quality Monthly',period:'March 2026',submitted:'Apr 5, 2026',results:15,exceedances:0,status:'Rejected',template:'Water Quality Monthly'},
+ {utility:'Greenfield Water Dept',report:'Water Quality Monthly',period:'February 2026',submitted:'Mar 2, 2026',results:16,exceedances:0,status:'Reviewed',template:'Water Quality Monthly'},
+ {utility:'Carmel Water Department',report:'Water Quality Monthly',period:'February 2026',submitted:'Mar 1, 2026',results:18,exceedances:1,status:'Reviewed',template:'Water Quality Monthly'},
+ {utility:'Noblesville Municipal Water',report:'Water Quality Monthly',period:'February 2026',submitted:'Mar 4, 2026',results:20,exceedances:0,status:'Reviewed',template:'Water Quality Monthly'},
+ {utility:'Fishers Utility',report:'Lead & Copper Compliance',period:'February 2026',submitted:'Mar 3, 2026',results:14,exceedances:0,status:'Reviewed',template:'Lead & Copper Compliance'},
+ {utility:'Westfield Water Works',report:'Water Quality Monthly',period:'February 2026',submitted:'Mar 5, 2026',results:15,exceedances:0,status:'Reviewed',template:'Water Quality Monthly'},
+ {utility:'Zionsville Water',report:'Water Quality Monthly',period:'February 2026',submitted:'Mar 6, 2026',results:17,exceedances:0,status:'Reviewed',template:'Water Quality Monthly'},
+ {utility:'Brownsburg Water',report:'Lead & Copper Compliance',period:'February 2026',submitted:'Mar 7, 2026',results:12,exceedances:0,status:'Reviewed',template:'Lead & Copper Compliance'},
+ {utility:'Avon Utilities',report:'Water Quality Monthly',period:'February 2026',submitted:'Mar 8, 2026',results:18,exceedances:0,status:'Reviewed',template:'Water Quality Monthly'},
+ {utility:'Lebanon Utilities',report:'Disinfection Byproduct',period:'February 2026',submitted:'Mar 5, 2026',results:10,exceedances:0,status:'Reviewed',template:'Disinfection Byproduct'},
+ {utility:'Danville Water',report:'Water Quality Monthly',period:'January 2026',submitted:'Feb 4, 2026',results:18,exceedances:0,status:'Reviewed',template:'Water Quality Monthly'},
+ {utility:'Plainfield Water Dept',report:'Water Quality Monthly',period:'January 2026',submitted:'Feb 3, 2026',results:16,exceedances:0,status:'Reviewed',template:'Water Quality Monthly'}
+];
+
+var subSortKey = 'submitted';
+var subSortAsc = false;
+
+function buildSubmissionsTable() {
+ filterSubmissionsTable();
+}
+
+function filterSubmissionsTable() {
+ var search = (document.getElementById('sub-search').value || '').toLowerCase();
+ var statusFilter = document.getElementById('sub-filter-status').value;
+ var periodFilter = document.getElementById('sub-filter-period').value;
+ var templateFilter = document.getElementById('sub-filter-template').value;
+
+ var filtered = ALL_SUBMISSIONS.filter(function(s) {
+  if(search && s.utility.toLowerCase().indexOf(search) === -1 && s.report.toLowerCase().indexOf(search) === -1) return false;
+  if(statusFilter && s.status !== statusFilter) return false;
+  if(periodFilter && s.period !== periodFilter) return false;
+  if(templateFilter && s.template.indexOf(templateFilter) === -1) return false;
+  return true;
+ });
+
+ // Sort
+ filtered.sort(function(a, b) {
+  var va = a[subSortKey] || '';
+  var vb = b[subSortKey] || '';
+  if(typeof va === 'string') va = va.toLowerCase();
+  if(typeof vb === 'string') vb = vb.toLowerCase();
+  if(va < vb) return subSortAsc ? -1 : 1;
+  if(va > vb) return subSortAsc ? 1 : -1;
+  return 0;
+ });
+
+ var tb = document.getElementById('submissions-tbody');
+ var h = '';
+ filtered.forEach(function(s,fi) {
+  var statusCls = s.status==='Reviewed'?'approved':s.status==='Rejected'?'rejected':s.status==='Submitted'?'submitted':'pending';
+  h += '<tr>';
+  h += '<td style="font-weight:500">'+s.utility+'</td>';
+  h += '<td style="font-size:13px">'+s.report+'</td>';
+  h += '<td style="font-size:13px">'+s.period+'</td>';
+  h += '<td style="font-size:13px;color:var(--text-sec)">'+s.submitted+'</td>';
+  h += '<td style="font-size:13px">'+s.results+'</td>';
+  if(s.exceedances > 0) {
+   h += '<td><span class="exceedance-link" style="cursor:default"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> '+s.exceedances+'</span></td>';
+  } else {
+   h += '<td><span class="no-exceedance"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> None</span></td>';
+  }
+  h += '<td><span class="td-status '+statusCls+'">'+s.status+'</span></td>';
+  if(SUBMISSION_DETAIL_DATA[s.utility+' — '+s.report]) {
+   h += '<td><button class="tbl-action-btn" onclick="openSubmissionViewer(\''+s.utility.replace(/'/g,"\\'")+'\',\''+s.report+'\',\''+s.period+'\')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg> View</button></td>';
+  } else {
+   h += '<td><button class="tbl-action-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg> View</button></td>';
+  }
+  h += '</tr>';
+ });
+ if(!filtered.length) {
+  h = '<tr><td colspan="8" style="text-align:center;padding:40px 20px;color:var(--text-hint)">No submissions match your filters.</td></tr>';
+ }
+ tb.innerHTML = h;
+ document.getElementById('sub-result-count').textContent = 'Showing ' + filtered.length + ' submission' + (filtered.length !== 1 ? 's' : '');
+ document.getElementById('sub-pagination').innerHTML = '<div>Showing '+filtered.length+' of '+ALL_SUBMISSIONS.length+' total submissions</div>';
+}
+
+function sortSubmissions(key) {
+ if(subSortKey === key) {
+  subSortAsc = !subSortAsc;
+ } else {
+  subSortKey = key;
+  subSortAsc = true;
+ }
+ filterSubmissionsTable();
+}
+
+// ========== SUBMISSION VIEWER ==========
+var SUBMISSION_DETAIL_DATA = {
+ 'Avon Utilities — Lead & Copper Compliance': {
+  submitted:'Apr 11, 2026',contact:'D. Ramirez',results:[
+   {f:'Lead — 90th Percentile',v:'0.009',u:'mg/L',mcl:'0.015',m:'EPA 200.8'},
+   {f:'Copper — 90th Percentile',v:'0.74',u:'mg/L',mcl:'1.3',m:'EPA 200.8'},
+   {f:'Lead — # Sites Sampled',v:'30',u:'sites',mcl:'—',m:'—'},
+   {f:'Lead — # Sites > AL',v:'1',u:'sites',mcl:'—',m:'—'},
+   {f:'Copper — # Sites Sampled',v:'30',u:'sites',mcl:'—',m:'—'},
+   {f:'Copper — # Sites > AL',v:'0',u:'sites',mcl:'—',m:'—'},
+   {f:'Source Water pH',v:'7.6',u:'SU',mcl:'6.5–8.5',m:'SM 4500-H'},
+   {f:'Alkalinity',v:'195',u:'mg/L',mcl:'—',m:'SM 2320'},
+   {f:'Orthophosphate',v:'1.2',u:'mg/L',mcl:'—',m:'SM 4500-P'},
+   {f:'Temperature',v:'14.2',u:'°C',mcl:'—',m:'SM 2550'},
+   {f:'Chlorine Residual',v:'1.1',u:'mg/L',mcl:'4.0',m:'SM 4500-Cl'},
+   {f:'Hardness',v:'210',u:'mg/L',mcl:'—',m:'SM 2340'},
+   {f:'Total Dissolved Solids',v:'380',u:'mg/L',mcl:'500',m:'SM 2540'},
+   {f:'Corrosion Index',v:'-0.3',u:'LSI',mcl:'—',m:'Calculated'}
+  ]
+ },
+ 'Avon Utilities — Water Quality Monthly': {
+  submitted:'Mar 8, 2026',contact:'D. Ramirez',results:[
+   {f:'Lead',v:'0.007',u:'mg/L',mcl:'0.015',m:'EPA 200.8'},
+   {f:'Copper',v:'0.65',u:'mg/L',mcl:'1.3',m:'EPA 200.8'},
+   {f:'Nitrate',v:'3.1',u:'mg/L',mcl:'10.0',m:'EPA 300.0'},
+   {f:'Fluoride',v:'1.5',u:'mg/L',mcl:'4.0',m:'EPA 300.0'},
+   {f:'Arsenic',v:'0.006',u:'mg/L',mcl:'0.010',m:'EPA 200.8'},
+   {f:'TTHM',v:'55.0',u:'ug/L',mcl:'80.0',m:'EPA 524.2'},
+   {f:'HAA5',v:'38.2',u:'ug/L',mcl:'60.0',m:'EPA 552.2'},
+   {f:'Total Coliform',v:'Absent',u:'P/A',mcl:'Present',m:'SM 9223B'},
+   {f:'E. coli',v:'Absent',u:'P/A',mcl:'Present',m:'SM 9223B'},
+   {f:'Chlorine Residual',v:'1.3',u:'mg/L',mcl:'4.0',m:'SM 4500-Cl'},
+   {f:'pH',v:'7.5',u:'SU',mcl:'6.5–8.5',m:'SM 4500-H'},
+   {f:'Turbidity',v:'0.11',u:'NTU',mcl:'1.0',m:'EPA 180.1'},
+   {f:'Alkalinity',v:'190',u:'mg/L',mcl:'—',m:'SM 2320'},
+   {f:'Hardness',v:'215',u:'mg/L',mcl:'—',m:'SM 2340'},
+   {f:'Iron',v:'0.05',u:'mg/L',mcl:'0.3',m:'EPA 200.7'},
+   {f:'Manganese',v:'0.01',u:'mg/L',mcl:'0.05',m:'EPA 200.8'},
+   {f:'Barium',v:'0.44',u:'mg/L',mcl:'2.0',m:'EPA 200.7'},
+   {f:'Temperature',v:'13.8',u:'°C',mcl:'—',m:'SM 2550'}
+  ]
+ },
+ 'Brownsburg Water — Water Quality Monthly': {
+  submitted:'Apr 8, 2026',contact:'P. Anderson',results:[
+   {f:'Lead',v:'0.010',u:'mg/L',mcl:'0.015',m:'EPA 200.8'},
+   {f:'Copper',v:'0.91',u:'mg/L',mcl:'1.3',m:'EPA 200.8'},
+   {f:'Nitrate',v:'5.1',u:'mg/L',mcl:'10.0',m:'EPA 300.0'},
+   {f:'Fluoride',v:'1.9',u:'mg/L',mcl:'4.0',m:'EPA 300.0'},
+   {f:'Arsenic',v:'0.007',u:'mg/L',mcl:'0.010',m:'EPA 200.8'},
+   {f:'TTHM',v:'66.0',u:'ug/L',mcl:'80.0',m:'EPA 524.2'},
+   {f:'HAA5',v:'45.8',u:'ug/L',mcl:'60.0',m:'EPA 552.2'},
+   {f:'Total Coliform',v:'Absent',u:'P/A',mcl:'Present',m:'SM 9223B'},
+   {f:'E. coli',v:'Absent',u:'P/A',mcl:'Present',m:'SM 9223B'},
+   {f:'Chlorine Residual',v:'1.4',u:'mg/L',mcl:'4.0',m:'SM 4500-Cl'},
+   {f:'pH',v:'7.6',u:'SU',mcl:'6.5–8.5',m:'SM 4500-H'},
+   {f:'Turbidity',v:'0.18',u:'NTU',mcl:'1.0',m:'EPA 180.1'},
+   {f:'Alkalinity',v:'200',u:'mg/L',mcl:'—',m:'SM 2320'},
+   {f:'Hardness',v:'232',u:'mg/L',mcl:'—',m:'SM 2340'},
+   {f:'Iron',v:'0.09',u:'mg/L',mcl:'0.3',m:'EPA 200.7'},
+   {f:'Manganese',v:'0.03',u:'mg/L',mcl:'0.05',m:'EPA 200.8'},
+   {f:'Barium',v:'0.61',u:'mg/L',mcl:'2.0',m:'EPA 200.7'},
+   {f:'Chromium',v:'0.022',u:'mg/L',mcl:'0.1',m:'EPA 200.8'}
+  ]
+ },
+ 'Brownsburg Water — Lead & Copper Compliance': {
+  submitted:'Mar 7, 2026',contact:'P. Anderson',results:[
+   {f:'Lead — 90th Percentile',v:'0.011',u:'mg/L',mcl:'0.015',m:'EPA 200.8'},
+   {f:'Copper — 90th Percentile',v:'0.88',u:'mg/L',mcl:'1.3',m:'EPA 200.8'},
+   {f:'Lead — # Sites Sampled',v:'20',u:'sites',mcl:'—',m:'—'},
+   {f:'Lead — # Sites > AL',v:'0',u:'sites',mcl:'—',m:'—'},
+   {f:'Copper — # Sites Sampled',v:'20',u:'sites',mcl:'—',m:'—'},
+   {f:'Copper — # Sites > AL',v:'0',u:'sites',mcl:'—',m:'—'},
+   {f:'Source Water pH',v:'7.4',u:'SU',mcl:'6.5–8.5',m:'SM 4500-H'},
+   {f:'Alkalinity',v:'188',u:'mg/L',mcl:'—',m:'SM 2320'},
+   {f:'Orthophosphate',v:'1.0',u:'mg/L',mcl:'—',m:'SM 4500-P'},
+   {f:'Chlorine Residual',v:'1.2',u:'mg/L',mcl:'4.0',m:'SM 4500-Cl'},
+   {f:'Hardness',v:'220',u:'mg/L',mcl:'—',m:'SM 2340'},
+   {f:'Temperature',v:'13.5',u:'°C',mcl:'—',m:'SM 2550'}
+  ]
+ },
+ 'Zionsville Water — Water Quality Monthly': {
+  submitted:'Apr 9, 2026',contact:'L. Franklin',results:[
+   {f:'Lead',v:'0.008',u:'mg/L',mcl:'0.015',m:'EPA 200.8'},
+   {f:'Copper',v:'0.76',u:'mg/L',mcl:'1.3',m:'EPA 200.8'},
+   {f:'Nitrate',v:'3.6',u:'mg/L',mcl:'10.0',m:'EPA 300.0'},
+   {f:'Fluoride',v:'1.6',u:'mg/L',mcl:'4.0',m:'EPA 300.0'},
+   {f:'Arsenic',v:'0.005',u:'mg/L',mcl:'0.010',m:'EPA 200.8'},
+   {f:'TTHM',v:'81.5',u:'ug/L',mcl:'80.0',m:'EPA 524.2'},
+   {f:'HAA5',v:'42.0',u:'ug/L',mcl:'60.0',m:'EPA 552.2'},
+   {f:'Total Coliform',v:'Absent',u:'P/A',mcl:'Present',m:'SM 9223B'},
+   {f:'E. coli',v:'Absent',u:'P/A',mcl:'Present',m:'SM 9223B'},
+   {f:'Chlorine Residual',v:'1.5',u:'mg/L',mcl:'4.0',m:'SM 4500-Cl'},
+   {f:'pH',v:'7.3',u:'SU',mcl:'6.5–8.5',m:'SM 4500-H'},
+   {f:'Turbidity',v:'0.14',u:'NTU',mcl:'1.0',m:'EPA 180.1'},
+   {f:'Alkalinity',v:'172',u:'mg/L',mcl:'—',m:'SM 2320'},
+   {f:'Hardness',v:'205',u:'mg/L',mcl:'—',m:'SM 2340'},
+   {f:'Iron',v:'0.06',u:'mg/L',mcl:'0.3',m:'EPA 200.7'},
+   {f:'Manganese',v:'0.02',u:'mg/L',mcl:'0.05',m:'EPA 200.8'},
+   {f:'Barium',v:'0.47',u:'mg/L',mcl:'2.0',m:'EPA 200.7'}
+  ]
+ },
+ 'Westfield Water Works — Lead & Copper Compliance': {
+  submitted:'Apr 16, 2026',contact:'Tom Harris',results:[
+   {f:'Lead — 90th Percentile',v:'0.016',u:'mg/L',mcl:'0.015',m:'EPA 200.8'},
+   {f:'Copper — 90th Percentile',v:'0.95',u:'mg/L',mcl:'1.3',m:'EPA 200.8'},
+   {f:'Lead — # Sites Sampled',v:'25',u:'sites',mcl:'—',m:'—'},
+   {f:'Lead — # Sites > AL',v:'3',u:'sites',mcl:'—',m:'—'},
+   {f:'Copper — # Sites Sampled',v:'25',u:'sites',mcl:'—',m:'—'},
+   {f:'Copper — # Sites > AL',v:'0',u:'sites',mcl:'—',m:'—'},
+   {f:'Source Water pH',v:'7.2',u:'SU',mcl:'6.5–8.5',m:'SM 4500-H'},
+   {f:'Alkalinity',v:'172',u:'mg/L',mcl:'—',m:'SM 2320'},
+   {f:'Orthophosphate',v:'0.9',u:'mg/L',mcl:'—',m:'SM 4500-P'},
+   {f:'Chlorine Residual',v:'0.8',u:'mg/L',mcl:'4.0',m:'SM 4500-Cl'},
+   {f:'Hardness',v:'198',u:'mg/L',mcl:'—',m:'SM 2340'},
+   {f:'Temperature',v:'15.1',u:'°C',mcl:'—',m:'SM 2550'}
+  ]
+ },
+ 'Westfield Water Works — Water Quality Monthly': {
+  submitted:'Apr 5, 2026',contact:'Tom Harris',results:[
+   {f:'Lead',v:'0.011',u:'mg/L',mcl:'0.015',m:'EPA 200.8'},
+   {f:'Copper',v:'0.83',u:'mg/L',mcl:'1.3',m:'EPA 200.8'},
+   {f:'Nitrate',v:'4.8',u:'mg/L',mcl:'10.0',m:'EPA 300.0'},
+   {f:'Fluoride',v:'1.7',u:'mg/L',mcl:'4.0',m:'EPA 300.0'},
+   {f:'Arsenic',v:'0.009',u:'mg/L',mcl:'0.010',m:'EPA 200.8'},
+   {f:'TTHM',v:'71.0',u:'ug/L',mcl:'80.0',m:'EPA 524.2'},
+   {f:'HAA5',v:'50.2',u:'ug/L',mcl:'60.0',m:'EPA 552.2'},
+   {f:'Total Coliform',v:'Absent',u:'P/A',mcl:'Present',m:'SM 9223B'},
+   {f:'E. coli',v:'Absent',u:'P/A',mcl:'Present',m:'SM 9223B'},
+   {f:'Chlorine Residual',v:'1.0',u:'mg/L',mcl:'4.0',m:'SM 4500-Cl'},
+   {f:'pH',v:'7.2',u:'SU',mcl:'6.5–8.5',m:'SM 4500-H'},
+   {f:'Turbidity',v:'0.20',u:'NTU',mcl:'1.0',m:'EPA 180.1'},
+   {f:'Alkalinity',v:'168',u:'mg/L',mcl:'—',m:'SM 2320'},
+   {f:'Hardness',v:'192',u:'mg/L',mcl:'—',m:'SM 2340'},
+   {f:'Iron',v:'0.12',u:'mg/L',mcl:'0.3',m:'EPA 200.7'}
+  ]
+ },
+ 'Lebanon Utilities — Water Quality Monthly': {
+  submitted:'Apr 6, 2026',contact:'S. Nguyen',results:[
+   {f:'Lead',v:'0.006',u:'mg/L',mcl:'0.015',m:'EPA 200.8'},
+   {f:'Copper',v:'0.59',u:'mg/L',mcl:'1.3',m:'EPA 200.8'},
+   {f:'Nitrate',v:'2.8',u:'mg/L',mcl:'10.0',m:'EPA 300.0'},
+   {f:'Fluoride',v:'1.3',u:'mg/L',mcl:'4.0',m:'EPA 300.0'},
+   {f:'Arsenic',v:'0.004',u:'mg/L',mcl:'0.010',m:'EPA 200.8'},
+   {f:'TTHM',v:'44.0',u:'ug/L',mcl:'80.0',m:'EPA 524.2'},
+   {f:'HAA5',v:'29.5',u:'ug/L',mcl:'60.0',m:'EPA 552.2'},
+   {f:'Total Coliform',v:'Absent',u:'P/A',mcl:'Present',m:'SM 9223B'},
+   {f:'E. coli',v:'Absent',u:'P/A',mcl:'Present',m:'SM 9223B'},
+   {f:'Chlorine Residual',v:'1.7',u:'mg/L',mcl:'4.0',m:'SM 4500-Cl'},
+   {f:'pH',v:'7.6',u:'SU',mcl:'6.5–8.5',m:'SM 4500-H'},
+   {f:'Turbidity',v:'0.09',u:'NTU',mcl:'1.0',m:'EPA 180.1'},
+   {f:'Alkalinity',v:'182',u:'mg/L',mcl:'—',m:'SM 2320'},
+   {f:'Hardness',v:'218',u:'mg/L',mcl:'—',m:'SM 2340'},
+   {f:'Iron',v:'0.04',u:'mg/L',mcl:'0.3',m:'EPA 200.7'},
+   {f:'Manganese',v:'0.01',u:'mg/L',mcl:'0.05',m:'EPA 200.8'}
+  ]
+ },
+ 'Lebanon Utilities — Disinfection Byproduct': {
+  submitted:'Mar 5, 2026',contact:'S. Nguyen',results:[
+   {f:'Total Trihalomethanes (TTHM)',v:'46.2',u:'ug/L',mcl:'80.0',m:'EPA 524.2'},
+   {f:'HAA5',v:'31.8',u:'ug/L',mcl:'60.0',m:'EPA 552.2'},
+   {f:'Chloroform',v:'22.1',u:'ug/L',mcl:'—',m:'EPA 524.2'},
+   {f:'Bromodichloromethane',v:'12.4',u:'ug/L',mcl:'—',m:'EPA 524.2'},
+   {f:'Dibromochloromethane',v:'8.3',u:'ug/L',mcl:'—',m:'EPA 524.2'},
+   {f:'Bromoform',v:'3.4',u:'ug/L',mcl:'—',m:'EPA 524.2'},
+   {f:'Monochloroacetic Acid',v:'4.1',u:'ug/L',mcl:'—',m:'EPA 552.2'},
+   {f:'Dichloroacetic Acid',v:'14.7',u:'ug/L',mcl:'—',m:'EPA 552.2'},
+   {f:'Trichloroacetic Acid',v:'10.2',u:'ug/L',mcl:'—',m:'EPA 552.2'},
+   {f:'Monobromoacetic Acid',v:'1.8',u:'ug/L',mcl:'—',m:'EPA 552.2'}
+  ]
+ }
+};
+
+function openSubmissionViewer(utility, report, period) {
+ var key = utility + ' — ' + report;
+ var data = SUBMISSION_DETAIL_DATA[key];
+ if(!data) return;
+ document.getElementById('rv-title').textContent = utility + ' — ' + report;
+ var h = '';
+ h += '<div class="rd-section"><div class="rd-section-title">Submission Details</div>';
+ h += '<div class="rd-field-row"><span class="rd-field-label">Utility</span><span class="rd-field-value">'+utility+'</span></div>';
+ h += '<div class="rd-field-row"><span class="rd-field-label">Report</span><span class="rd-field-value">'+report+'</span></div>';
+ h += '<div class="rd-field-row"><span class="rd-field-label">Period</span><span class="rd-field-value">'+period+'</span></div>';
+ h += '<div class="rd-field-row"><span class="rd-field-label">Submitted</span><span class="rd-field-value">'+data.submitted+'</span></div>';
+ h += '<div class="rd-field-row"><span class="rd-field-label">Contact</span><span class="rd-field-value">'+data.contact+'</span></div>';
+ h += '</div>';
+ // Count exceedances
+ var excCount = 0;
+ data.results.forEach(function(r){ if(r.mcl!=='—'&&r.mcl!=='Present'&&!r.mcl.includes('–')&&parseFloat(r.v)>parseFloat(r.mcl)) excCount++; });
+ if(excCount > 0) {
+  h += '<div style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--amber-bg);border:1px solid #e8d8a0;border-radius:var(--radius);margin-bottom:16px;font-size:13px;color:var(--amber);font-weight:600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> '+excCount+' threshold exceedance'+(excCount!==1?'s':'')+ ' detected</div>';
+ }
+ h += '<div class="rd-section"><div class="rd-section-title">Results ('+data.results.length+' fields)</div>';
+ h += '<div class="tbl-wrap"><table style="font-size:12px"><thead><tr><th>Analyte</th><th>Result</th><th>Unit</th><th>MCL</th><th>Method</th></tr></thead><tbody>';
+ data.results.forEach(function(r) {
+  var over = false;
+  if(r.mcl !== '—' && r.mcl !== 'Present' && !r.mcl.includes('–')) {
+   over = parseFloat(r.v) > parseFloat(r.mcl);
+  }
+  h += '<tr'+(over?' style="background:#fef2f2"':'')+'><td style="font-weight:500">'+r.f+'</td><td style="'+(over?'color:var(--red);font-weight:700':'')+'">'+r.v+'</td><td>'+r.u+'</td><td>'+r.mcl+'</td><td>'+r.m+'</td></tr>';
+ });
+ h += '</tbody></table></div></div>';
+ document.getElementById('rv-body').innerHTML = h;
+ document.getElementById('report-viewer-overlay').classList.add('open');
+}
+
+// ========== INIT ==========
+buildMORTable();
+buildUFTable();
+showSMTab('mor');
+
+</script>
+</body>
+</html>
